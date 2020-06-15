@@ -9,12 +9,13 @@ import { redis } from "./redis";
 import session from "express-session";
 import connectRedis from "connect-redis";
 import { LoginResolver } from "./modules/user/LogIn";
+import { GetCurrentUserResolver } from "./modules/user/GetCurrentUser";
 
 const main = async () => {
   await createConnection();
 
   const schema = await buildSchema({
-    resolvers: [RegisterResolver, LoginResolver],
+    resolvers: [RegisterResolver, LoginResolver, GetCurrentUserResolver],
   });
 
   const apolloServer = new ApolloServer({
@@ -24,9 +25,11 @@ const main = async () => {
 
   const app = Express();
 
+  // redis is for sessions, essentially long term authorization
+  // make sure the redis store is running - redis-server /usr/local/etc/redis.conf
   const RedisStore = connectRedis(session);
 
-  // for sessions - cross origin resource sharing
+  // cross origin resource sharing
   app.use(
     cors({
       credentials: true,
