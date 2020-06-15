@@ -16,6 +16,10 @@ const main = async () => {
 
   const schema = await buildSchema({
     resolvers: [RegisterResolver, LoginResolver, GetCurrentUserResolver],
+    // userId cookie must be available on session to access authorized resolvers
+    authChecker: ({ context: { req } }) => {
+      return !!req.session.userId;
+    },
   });
 
   const apolloServer = new ApolloServer({
