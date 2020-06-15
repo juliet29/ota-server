@@ -13,10 +13,9 @@ export class User extends BaseEntity {
   username: string;
 
   @Field()
-  @Column()
+  @Column("text", { unique: true })
   email: string;
 
-  // TODO: delete this field if not needed later
   @Field()
   name: string;
 
