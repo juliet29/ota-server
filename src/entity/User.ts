@@ -4,8 +4,8 @@ import { ObjectType, Field, ID } from "type-graphql";
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
-  @Field(() => ID)
-  @PrimaryGeneratedColumn()
+  @Field(() => ID) // @Field() decorator is for the purposes of graphql
+  @PrimaryGeneratedColumn() // for the purposes of the postgres database
   id: number;
 
   @Field()
@@ -16,6 +16,7 @@ export class User extends BaseEntity {
   @Column()
   email: string;
 
+  // TODO: delete this field if not needed later
   @Field()
   name: string;
 
