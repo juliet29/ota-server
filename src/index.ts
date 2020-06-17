@@ -1,21 +1,18 @@
 import { ApolloServer } from "apollo-server-express";
-import Express from "express";
-import { buildSchema } from "type-graphql";
-import "reflect-metadata";
-import { createConnection } from "typeorm";
-import { RegisterResolver } from "./modules/user/Register";
-import cors from "cors";
-import { redis } from "./redis";
-import session from "express-session";
 import connectRedis from "connect-redis";
-import { LoginResolver } from "./modules/user/LogIn";
-import { GetCurrentUserResolver } from "./modules/user/GetCurrentUser";
+import cors from "cors";
+import Express from "express";
+import session from "express-session";
+import "reflect-metadata";
+import { buildSchema } from "type-graphql";
+import { createConnection } from "typeorm";
+import { redis } from "./redis";
 
 const main = async () => {
   await createConnection();
 
   const schema = await buildSchema({
-    resolvers: [RegisterResolver, LoginResolver, GetCurrentUserResolver],
+    resolvers: [__dirname + "/modules/**/*.ts"],
     // userId cookie must be available on session to access authorized resolvers
     authChecker: ({ context: { req } }) => {
       return !!req.session.userId;
