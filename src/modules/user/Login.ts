@@ -17,6 +17,7 @@ export class LoginResolver {
 
     if (!user) {
       return null;
+      console.log("user not found");
     }
 
     // if we find the user, compare the passwords entered
@@ -24,6 +25,12 @@ export class LoginResolver {
 
     if (!valid) {
       return null;
+      console.log("password not valid");
+    }
+
+    if (!user.confirmed) {
+      return null;
+      console.log("you need to confirm your email");
     }
 
     // give the user a session if everything is good
