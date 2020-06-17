@@ -37,7 +37,7 @@ const main = async () => {
   app.use(
     cors({
       credentials: true,
-      origin: "http://localhost:19002", // where the app will be hosted TODO: change this for expo
+      origin: "http://localhost:19006", // where the app will be hosted TODO: change this for expo
     })
   );
 
