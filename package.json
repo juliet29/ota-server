@@ -10,6 +10,7 @@
     "bcryptjs": "^2.4.3",
     "class-validator": "^0.12.2",
     "connect-redis": "^4.0.4",
+    "copyfiles": "^2.3.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
@@ -20,6 +21,7 @@
     "pg": "^8.2.1",
     "pg-connection-string": "^2.2.3",
     "reflect-metadata": "^0.1.13",
+    "rimraf": "^3.0.2",
     "type-graphql": "^1.0.0-rc.2",
     "typeorm": "^0.2.25"
   },
@@ -44,8 +46,10 @@
     "typescript": "^3.9.5"
   },
   "scripts": {
+    "postinstall": "yarn run build:server",
     "start": "ts-node-dev --respawn src/index.ts",
     "db:setup": "ts-node ./src/test-utils/setup.ts",
-    "test": "npm run db:setup && jest"
+    "test": "npm run db:setup && jest",
+    "build": "rimraf ./dist && tsc && copyfiles -u 1 src/**.graphql dist/server/src"
   }
 }
