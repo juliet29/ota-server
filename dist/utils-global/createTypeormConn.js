@@ -12,9 +12,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createTypeormConnection = void 0;
 const typeorm_1 = require("typeorm");
 exports.createTypeormConnection = () => __awaiter(void 0, void 0, void 0, function* () {
-    const connectionOptions = yield typeorm_1.getConnectionOptions(process.env.NODE_ENV);
-    return process.env.NODE_ENV === "production"
-        ? typeorm_1.createConnection(Object.assign(Object.assign({}, connectionOptions), { url: process.env.DATABASE_URL, name: "default" }))
-        : typeorm_1.createConnection(Object.assign(Object.assign({}, connectionOptions), { name: "default" }));
+    console.log(process.env.DATABASE_URL);
+    if (process.env.DATABASE_URL) {
+        console.log(process.env.DATABASE_URL);
+        typeorm_1.createConnection({
+            type: "postgres",
+            url: process.env.DATABASE_URL,
+            extra: {
+                ssl: true,
+            },
+        });
+    }
+    else {
+        const connectionOptions = yield typeorm_1.getConnectionOptions(process.env.NODE_ENV);
+        typeorm_1.createConnection(Object.assign({}, connectionOptions));
+    }
 });
 //# sourceMappingURL=createTypeormConn.js.map
