@@ -22,9 +22,6 @@ export const createTypeormConnection = async () => {
       type: "postgres",
       url: process.env.DATABASE_URL,
       entities: [User],
-      extra: {
-        ssl: true,
-      },
     } as any);
   } else {
     const connectionOptions = await getConnectionOptions(process.env.NODE_ENV);
