@@ -54,7 +54,7 @@ const main = async () => {
   const port = process.env.PORT || 4000;
 
   app.listen(port, () => {
-    console.log(`sever started on  http://localhost:${port}/graphql`);
+    console.log(`sever started on  http://localhost:${port}`);
   });
 };
 
