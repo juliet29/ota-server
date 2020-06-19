@@ -1,4 +1,4 @@
-import { GetCurrentUserResolver } from "src/modules/user/GetCurrentUser";
+import { GetCurrentUserResolver } from "../modules/user/GetCurrentUser";
 import { buildSchema } from "type-graphql";
 import { ChangePasswordResolver } from "../modules/user/ChangePassword";
 import { ConfirmUserResolver } from "../modules/user/ConfirmUser";
