@@ -4,12 +4,12 @@ import cors from "cors";
 import Express from "express";
 import session from "express-session";
 import "reflect-metadata";
-import { createConnection } from "typeorm";
 import { redis } from "./redis";
 import { CreateSchema } from "./utils-global/createSchema";
+import { createTypeormConnection } from "./utils-global/createTypeormConn";
 
 const main = async () => {
-  await createConnection();
+  await createTypeormConnection();
 
   const schema = await CreateSchema();
 
