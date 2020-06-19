@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createTypeormConnection = void 0;
 const typeorm_1 = require("typeorm");
+const User_1 = require("../entity/User");
 exports.createTypeormConnection = () => __awaiter(void 0, void 0, void 0, function* () {
     console.log(process.env.DATABASE_URL);
     if (process.env.DATABASE_URL) {
@@ -18,9 +19,7 @@ exports.createTypeormConnection = () => __awaiter(void 0, void 0, void 0, functi
         typeorm_1.createConnection({
             type: "postgres",
             url: process.env.DATABASE_URL,
-            extra: {
-                ssl: true,
-            },
+            entities: [User_1.User],
         });
     }
     else {
