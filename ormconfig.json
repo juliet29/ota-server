@@ -1,20 +1,12 @@
-[
-  {
-    "name": "production",
-    "type": "postgres",
-    "synchronize": true,
-    "logging": true
-  },
-  {
-    "name": "development",
-    "type": "postgres",
-    "host": "localhost",
-    "port": 5433,
-    "username": "julietnu",
-    "password": "mypass",
-    "database": "julietnu",
-    "synchronize": true,
-    "logging": true,
-    "entities": ["src/entity/*.*"]
-  }
-]
+{
+  "name": "development",
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5433,
+  "username": "julietnu",
+  "password": "mypass",
+  "database": "julietnu",
+  "synchronize": true,
+  "logging": true,
+  "entities": ["src/entity/*.*"]
+}
