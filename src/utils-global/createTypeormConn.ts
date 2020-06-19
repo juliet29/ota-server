@@ -1,4 +1,5 @@
 import { getConnectionOptions, createConnection } from "typeorm";
+import { User } from "../entity/User";
 // import * as PostgressConnectionStringParser from "pg-connection-string";
 
 export const createTypeormConnection = async () => {
@@ -20,6 +21,7 @@ export const createTypeormConnection = async () => {
     createConnection({
       type: "postgres",
       url: process.env.DATABASE_URL,
+      entities: [User],
       extra: {
         ssl: true,
       },
