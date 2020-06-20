@@ -28,4 +28,4 @@ RUN ls
 
 EXPOSE 4000
 
-CMD node src/index.js
+CMD NODE_ENV=production node index.js 

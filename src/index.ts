@@ -11,6 +11,7 @@ import { createTypeormConnection } from "./utils-global/createTypeormConn";
 const main = async () => {
   // await createTypeormConnection();
   const conn = await createTypeormConnection();
+  // console.log(`my connection is ${conn}`);
   await conn.runMigrations();
 
   // let retries = 5;
@@ -32,6 +33,8 @@ const main = async () => {
   const apolloServer = new ApolloServer({
     schema,
     context: ({ req, res }: any) => ({ req, res }),
+    introspection: true,
+    playground: true,
   });
 
   const app = Express();
@@ -70,7 +73,7 @@ const main = async () => {
   const port = process.env.PORT || 4000;
 
   app.listen(port, () => {
-    console.log(`sever started on  http://localhost:${port}`);
+    console.log(`server started on  http://localhost:${port}`);
   });
 };
 

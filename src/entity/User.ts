@@ -1,5 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  OneToMany,
+} from "typeorm";
 import { ObjectType, Field, ID } from "type-graphql";
+import { Listing } from "./Listing";
 
 @ObjectType()
 @Entity()
@@ -21,4 +28,7 @@ export class User extends BaseEntity {
 
   @Column("bool", { default: false })
   confirmed: boolean;
+
+  @OneToMany(() => Listing, (listing) => listing.user)
+  listings: Listing[];
 }
