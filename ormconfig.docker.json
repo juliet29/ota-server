@@ -2,7 +2,7 @@
   "name": "default",
   "type": "postgres",
   "host": "db",
-  "port": 5430,
+  "port": 5432,
   "username": "julietnu",
   "password": "mypass",
   "database": "julietnu",

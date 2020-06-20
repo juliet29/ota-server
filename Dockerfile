@@ -20,7 +20,7 @@ COPY . .
 # build to javascript
 RUN npm run build
 # copy over more things
-COPY ormconfig.docker.json ./ormconfig.json
+COPY ormconfig.json ./dist
 
 WORKDIR ./dist
 

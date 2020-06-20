@@ -9,7 +9,10 @@ import { CreateSchema } from "./utils-global/createSchema";
 import { createTypeormConnection } from "./utils-global/createTypeormConn";
 
 const main = async () => {
-  await createTypeormConnection();
+  // await createTypeormConnection();
+  const conn = await createTypeormConnection();
+  await conn.runMigrations();
+
   // let retries = 5;
   // while (retries) {
   //   try {
