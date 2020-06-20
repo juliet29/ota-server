@@ -10,6 +10,19 @@ import { createTypeormConnection } from "./utils-global/createTypeormConn";
 
 const main = async () => {
   await createTypeormConnection();
+  // let retries = 5;
+  // while (retries) {
+  //   try {
+  //     await createTypeormConnection();
+  //     break;
+  //   } catch (err) {
+  //     console.log(err);
+  //     retries -= 1;
+  //     console.log(`retries left:  ${retries}`);
+  //     // wait 5 seconds
+  //     await new Promise((res) => setTimeout(res, 5000));
+  //   }
+  // }
 
   const schema = await CreateSchema();
 

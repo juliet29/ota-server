@@ -46,8 +46,9 @@
     "typescript": "^3.9.5"
   },
   "scripts": {
-    "start": "ts-node-dev --respawn src/index.ts",
-    "build": "rimraf ./dist && tsc -b",
+    "start": "NODE_ENV=production ts-node-dev src/index.ts",
+    "dev": "ts-node-dev --respawn src/index.ts",
+    "build": "tsc -b",
     "db:setup": "ts-node ./src/test-utils/setup.ts",
     "test": "npm run db:setup && jest"
   }
