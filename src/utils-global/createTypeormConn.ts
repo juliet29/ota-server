@@ -1,6 +1,6 @@
 import { getConnectionOptions, createConnection } from "typeorm";
 import { User } from "../entity/User";
-import { Listing } from "../entity/Listing";
+import { Post } from "../entity/Post";
 
 export const createTypeormConnection = async () => {
   console.log(`typeorm knows our env is ${process.env.NODE_ENV}`);
@@ -9,7 +9,7 @@ export const createTypeormConnection = async () => {
     const productionConn = {
       ...connectionOptions,
       url: process.env.DATABASE_URL,
-      entities: [User, Listing],
+      entities: [User, Post],
       name: "default",
     } as any;
     // url will only be defined when actually in production

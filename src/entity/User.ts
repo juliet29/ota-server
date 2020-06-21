@@ -6,7 +6,7 @@ import {
   OneToMany,
 } from "typeorm";
 import { ObjectType, Field, ID } from "type-graphql";
-import { Listing } from "./Listing";
+import { Post } from "./Post";
 
 @ObjectType()
 @Entity()
@@ -26,9 +26,11 @@ export class User extends BaseEntity {
   @Column()
   password: string;
 
-  @Column("bool", { default: false })
+  // TODO: reset default to be false after implement confirm user functionality
+  @Column("bool", { default: true })
   confirmed: boolean;
 
-  @OneToMany(() => Listing, (listing) => listing.user)
-  listings: Listing[];
+  // one user can have many post assigned to them
+  @OneToMany(() => Post, (post) => post.user)
+  post: Post[];
 }

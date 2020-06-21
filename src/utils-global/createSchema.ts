@@ -6,6 +6,8 @@ import { ForgotPasswordResolver } from "../modules/user/ForgotPassword";
 import { LoginResolver } from "../modules/user/Login";
 import { LogoutResolver } from "../modules/user/Logout";
 import { RegisterResolver } from "../modules/user/Register";
+import { CreatePostResolver } from "../modules/post/CreatePost";
+import { GetPostsResolver } from "../modules/post/GetPosts";
 
 export const CreateSchema = () =>
   buildSchema({
@@ -17,6 +19,8 @@ export const CreateSchema = () =>
       LogoutResolver,
       GetCurrentUserResolver,
       RegisterResolver,
+      CreatePostResolver,
+      GetPostsResolver,
     ],
     // userId cookie must be available on session to access authorized resolvers
     authChecker: ({ context: { req } }) => {

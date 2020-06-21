@@ -8,6 +8,8 @@ import { createConfirmationUrl } from "../utils/createConfirmationUrl";
 
 @Resolver()
 export class RegisterResolver {
+  // have to be authenticated to do this query
+  // just a simple check
   @UseMiddleware(isAuth)
   @Query(() => String)
   async hello() {
