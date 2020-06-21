@@ -4,7 +4,7 @@ import cors from "cors";
 import Express from "express";
 import session from "express-session";
 import "reflect-metadata";
-import { redis } from "./redis";
+import { redis } from "./utils-global/redis";
 import { CreateSchema } from "./utils-global/createSchema";
 import { createTypeormConnection } from "./utils-global/createTypeormConn";
 

@@ -1,5 +1,5 @@
 // after user has clicked on confirmation link in their email, they can log in
-import { redis } from "../../redis";
+import { redis } from "../../utils-global/redis";
 import { Arg, Mutation, Resolver } from "type-graphql";
 import { User } from "../../entity/User";
 

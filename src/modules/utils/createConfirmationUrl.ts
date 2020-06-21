@@ -1,7 +1,7 @@
 // create confirmation URL that the user will have to click on in their email
 // to show that they actually own that email
 import { v4 } from "uuid";
-import { redis } from "../../redis";
+import { redis } from "../../utils-global/redis";
 import { confirmUserPrefix } from "../constants/redisPrefixes";
 
 export const createConfirmationUrl = async (userId: number) => {
