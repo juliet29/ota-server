@@ -7,6 +7,10 @@ import Express from "express";
 
 import { CreateSchema } from "./utils-global/createSchema";
 import { createTypeormConnection } from "./utils-global/createTypeormConn";
+import { verify } from "jsonwebtoken";
+import { User } from "./entity/User";
+import { sendRefreshToken } from "./utils-global/sendRefreshToken";
+import { createRefreshToken, createAccessToken } from "./utils-global/auth";
 
 const main = async () => {
   const app = Express();
@@ -17,9 +21,32 @@ const main = async () => {
     })
   );
   app.use(cookieParser());
+  // pages
   app.get("/", (_req, res) =>
     res.send("Welcome to the OnTheAuxServer. GraphQL playground is at /graphql")
   );
+  app.post("/refresh_token", async (req, res) => {
+    const token = req.cookies.jid;
+    if (!token) {
+      return res.send({ ok: false, accessToken: "" });
+    }
+    let payload: any = null;
+    try {
+      payload = verify(token, "REFRESH_TOKEN_SEC");
+    } catch (err) {
+      console.log(err);
+      return res.send({ ok: false, accessToken: "" });
+    }
+    // token is valid, send back an access token
+    const user = await User.findOne({ id: payload.userId });
+    if (!user) {
+      return res.send({ ok: false, accessToken: "" });
+    }
+    //TODO versions
+    sendRefreshToken(res, createRefreshToken(user));
+
+    return res.send({ ok: true, accessToken: createAccessToken(user) });
+  });
 
   const conn = await createTypeormConnection();
   await conn.runMigrations();
@@ -33,7 +60,7 @@ const main = async () => {
     playground: true,
   });
 
-  apolloServer.applyMiddleware({ app, cors: false }); // try make true
+  apolloServer.applyMiddleware({ app, cors: false });
 
   const port = process.env.PORT || 4000;
 
