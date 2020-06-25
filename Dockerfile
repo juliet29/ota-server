@@ -19,7 +19,7 @@ COPY . .
 
 # build to javascript
 RUN npm run build
-# copy over more things
+# copy over the ormconfig
 COPY ormconfig.json ./dist
 
 WORKDIR ./dist

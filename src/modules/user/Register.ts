@@ -16,10 +16,10 @@ export class RegisterResolver {
     return "Hello World";
   }
 
-  @Mutation(() => User)
+  @Mutation(() => Boolean)
   async register(
     @Arg("data") { username, email, password }: RegisterInput
-  ): Promise<User> {
+  ): Promise<Boolean> {
     // user's input is validated before hand in userInput.ts
 
     // hash the users password
@@ -35,6 +35,6 @@ export class RegisterResolver {
     // send email to confirm
     await sendEmail(email, await createConfirmationUrl(user.id));
 
-    return user;
+    return true;
   }
 }
