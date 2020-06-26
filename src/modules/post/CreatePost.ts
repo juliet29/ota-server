@@ -17,19 +17,18 @@ export class CreatePostResolver {
     // TODO: create input field to handle validation
 
     // get the user from the context
-    const user = await User.findOne(ctx.req.session!.userId)!;
+    const user = await User.findOne(ctx.payload?.userId)!;
     if (!user) {
       throw new AuthenticationError("User not found");
     }
     const timeSubmitted = new Date().toISOString();
 
-    // TODO: do something if this is not safely put in db
     // save the new post into the database
     try {
       await Post.create({
         text,
         link,
-        user,
+        user, // TODO hmmm
         timeSubmitted,
         ...user,
       }).save();
