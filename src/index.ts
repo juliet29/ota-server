@@ -61,12 +61,23 @@ const main = async () => {
   // SPOTIFY AUTH!!!!!!!!!!!!//////
   console.log(`spot id: ${SPOTIFY_CLIENT_ID}`);
 
+  // if (process.env.NODE_ENV === "production") {
+  //   const url = "https://peaceful-oasis-92942.herokuapp.com"
+  // } else {
+  //   const url = "http://localhost:4000"
+  // }
+
+  const url =
+    process.env.NODE_ENV === "production"
+      ? "https://peaceful-oasis-92942.herokuapp.com"
+      : "http://localhost:4000";
+
   passport.use(
     new SpotifyStrategy(
       {
         clientID: SPOTIFY_CLIENT_ID,
         clientSecret: SPOTIFY_CLIENT_SECRET,
-        callbackURL: "http://localhost:4000/auth/spotify/callback/",
+        callbackURL: `${url}/auth/spotify/callback/`,
       },
       function (
         accessToken: any,
