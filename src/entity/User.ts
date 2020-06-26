@@ -26,8 +26,8 @@ export class User extends BaseEntity {
   @Column("text", { nullable: true })
   password: string;
 
-  @Column("text", { nullable: true })
-  spotifyId: string | null;
+  // @Column("text", { nullable: true })
+  // spotifyId: string | null;
 
   // TODO: reset default to be false after implement confirm user functionality
   @Column("bool", { default: true })
