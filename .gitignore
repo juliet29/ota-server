@@ -1,3 +1,5 @@
 node_modules
 dist
 pgdata
+.env
+./utils-global/secrets
