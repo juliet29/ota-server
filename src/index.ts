@@ -16,6 +16,11 @@ import {
   SPOTIFY_CLIENT_ID,
   SPOTIFY_CLIENT_SECRET,
 } from "./utils-global/secrets";
+import {
+  setSpotifyAccessToken,
+  getSpotifyAccessToken,
+} from "./utils-global/spotifyToken";
+import { SpotifyDataSource } from "./modules/spotify/SpotifyRestDataSource";
 
 const main = async () => {
   const app = Express();
@@ -30,7 +35,7 @@ const main = async () => {
   app.get("/", (_req, res) =>
     res.send("Welcome to the OnTheAuxServer. GraphQL playground is at /graphql")
   );
-  // refresh token page
+  ////////// REFRESH TOKEN ///////////////
   app.post("/refresh_token", async (req, res) => {
     const token = req.cookies.jid;
     if (!token) {
@@ -58,14 +63,8 @@ const main = async () => {
   const conn = await createTypeormConnection();
   await conn.runMigrations();
 
-  // SPOTIFY AUTH!!!!!!!!!!!!//////
-  console.log(`spot id: ${SPOTIFY_CLIENT_ID}`);
-
-  // if (process.env.NODE_ENV === "production") {
-  //   const url = "https://peaceful-oasis-92942.herokuapp.com"
-  // } else {
-  //   const url = "http://localhost:4000"
-  // }
+  ////////// SPOTIFY AUTH!///////////////
+  // const SpotifyAccessToken: string;
 
   const url =
     process.env.NODE_ENV === "production"
@@ -87,9 +86,12 @@ const main = async () => {
         done: any
       ) {
         console.log(accessToken, refreshToken, expires_in);
+        setSpotifyAccessToken(accessToken);
+
         // asynchronous verification, for effect...
         process.nextTick(function () {
-          return done(null, profile);
+          console.log("");
+          return done(null, profile, accessToken);
         });
       }
     )
@@ -108,6 +110,9 @@ const main = async () => {
     async (_req, res) => {
       // give user a session
       // Successful authentication, redirect home.
+      // check if we got that token...
+      let quick_tok = getSpotifyAccessToken();
+      console.log("spot acc is", quick_tok);
       res.redirect("/");
     }
   );
@@ -118,6 +123,9 @@ const main = async () => {
   const apolloServer = new ApolloServer({
     schema,
     context: ({ req, res }: any) => ({ req, res }),
+    dataSources: () => ({
+      SpotifyAPI: new SpotifyDataSource(),
+    }),
     introspection: true,
     playground: true,
   });

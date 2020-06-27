@@ -8,6 +8,7 @@ import { LogoutResolver } from "../modules/user/Logout";
 import { RegisterResolver } from "../modules/user/Register";
 import { CreatePostResolver } from "../modules/post/CreatePost";
 import { GetPostsResolver } from "../modules/post/GetPosts";
+import { GetArtistResolver } from "../modules/spotify/GetArtist";
 
 export const CreateSchema = () =>
   buildSchema({
@@ -21,7 +22,9 @@ export const CreateSchema = () =>
       RegisterResolver,
       CreatePostResolver,
       GetPostsResolver,
+      GetArtistResolver,
     ],
+    //TODO remove this
     // userId cookie must be available on session to access authorized resolvers
     authChecker: ({ context: { req } }) => {
       return !!req.session.userId;
