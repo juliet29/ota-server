@@ -48,12 +48,13 @@ const main = async () => {
       console.log(err);
       return res.send({ ok: false, accessToken: "" });
     }
-    // token is valid, send back an access token
+
     const user = await User.findOne({ id: payload.userId });
     if (!user) {
       return res.send({ ok: false, accessToken: "" });
     }
     //TODO versions
+    // token is valid, send back an access token
     sendRefreshToken(res, createRefreshToken(user));
 
     return res.send({ ok: true, accessToken: createAccessToken(user) });
@@ -85,8 +86,10 @@ const main = async () => {
         profile: any,
         done: any
       ) {
-        console.log(accessToken, refreshToken, expires_in);
+        console.log("ACC TOKEN: ", accessToken);
         setSpotifyAccessToken(accessToken);
+        console.log("REFRESH ", refreshToken);
+        console.log("EXPIRY ", expires_in);
 
         // asynchronous verification, for effect...
         process.nextTick(function () {

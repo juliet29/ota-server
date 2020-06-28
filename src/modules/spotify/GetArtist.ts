@@ -10,6 +10,6 @@ export class GetArtistResolver {
     @Arg("id") id: string,
     @Ctx() ctx: MyContext //   (_: any, { id }: any, { dataSources }: any)
   ) {
-    return ctx.dataSources.SpotifyAPI.getArtist(id);
+    return ctx.dataSources?.SpotifyAPI.getArtist(id);
   }
 }

@@ -6,6 +6,7 @@
   "author": "Juliet Nwagwu Ume-Ezeoke <julietnu@Juliets-MacBook-Pro.local>",
   "license": "MIT",
   "dependencies": {
+    "apollo-datasource": "^0.7.1",
     "apollo-datasource-rest": "^0.9.2",
     "apollo-server-express": "^2.14.4",
     "bcryptjs": "^2.4.3",

@@ -2,4 +2,4 @@ node_modules
 dist
 pgdata
 .env
-./utils-global/secrets
+src/utils-global/secrets.ts
