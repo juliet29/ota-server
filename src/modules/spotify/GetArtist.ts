@@ -1,4 +1,3 @@
-// gets the user based on the cookie saved in the session
 import { Artist } from "../../entity/Artist";
 import { Query, Resolver, Arg, Ctx } from "type-graphql";
 import { MyContext } from "src/types/MyContext";
