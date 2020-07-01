@@ -1,5 +1,6 @@
 import { RESTDataSource, RequestOptions } from "apollo-datasource-rest";
-import { getSpotifyAccessToken } from "../../utils-global/spotifyToken";
+// import { getSpotifyAccessToken } from "../../utils-global/spotifyToken";
+import { spotifyApi } from "../../index";
 
 // get access token
 // let spotifyAccessToken = getSpotifyAccessToken();
@@ -20,8 +21,12 @@ export class SpotifyDataSource extends RESTDataSource {
   }
 
   willSendRequest(request: RequestOptions) {
-    const spotifyAccessToken = getSpotifyAccessToken();
-    console.log("applying middleware...", spotifyAccessToken);
+    const spotifyAccessToken = spotifyApi.getAccessToken();
+    console.log(
+      "applying middleware... the access token is " +
+        spotifyApi.getAccessToken()
+    );
+    // console.log("applying middleware...", spotifyAccessToken);
     request.headers.set("Authorization", `Bearer ${spotifyAccessToken}`);
   }
 }

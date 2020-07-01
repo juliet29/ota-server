@@ -21,6 +21,12 @@ import {
   getSpotifyAccessToken,
 } from "./utils-global/spotifyToken";
 import { SpotifyDataSource } from "./modules/spotify/SpotifyRestDataSource";
+import SpotifyWebApi from "spotify-web-api-node";
+
+export const spotifyApi = new SpotifyWebApi({
+  clientId: SPOTIFY_CLIENT_ID,
+  clientSecret: SPOTIFY_CLIENT_SECRET,
+});
 
 const main = async () => {
   const app = Express();
@@ -63,6 +69,29 @@ const main = async () => {
   // connect to postgresql database, run migrations if needed
   const conn = await createTypeormConnection();
   await conn.runMigrations();
+
+  ////////// SPOTIFY CLIENT CREDENTIALS AUTH///////////////
+
+  //Retrieve an access token.
+  const spotifyGrantCredentials = () => {
+    spotifyApi.clientCredentialsGrant().then(
+      function (data) {
+        console.log("The access token expires in " + data.body["expires_in"]);
+        console.log("The access token is " + data.body["access_token"]);
+
+        // Save the access token so that it's used in future calls
+        spotifyApi.setAccessToken(data.body["access_token"]);
+      },
+      function (err) {
+        console.log(
+          "Something went wrong when retrieving an access token",
+          err
+        );
+      }
+    );
+  };
+
+  setInterval(spotifyGrantCredentials, 2000);
 
   ////////// SPOTIFY AUTH!///////////////
   // const SpotifyAccessToken: string;

@@ -29,6 +29,7 @@
     "pg-connection-string": "^2.2.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
+    "spotify-web-api-node": "^4.0.0",
     "tsconfig-paths": "^3.9.0",
     "type-graphql": "^1.0.0-rc.2",
     "typeorm": "^0.2.25"
@@ -49,6 +50,7 @@
     "@types/nodemailer": "^6.4.0",
     "@types/passport": "^1.0.3",
     "@types/passport-spotify": "^1.1.0",
+    "@types/spotify-web-api-node": "^4.0.1",
     "@types/uuid": "^8.0.0",
     "jest": "^26.0.1",
     "nodemon": "^2.0.4",
