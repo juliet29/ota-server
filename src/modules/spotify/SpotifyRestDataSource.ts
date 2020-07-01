@@ -22,11 +22,9 @@ export class SpotifyDataSource extends RESTDataSource {
 
   willSendRequest(request: RequestOptions) {
     const spotifyAccessToken = spotifyApi.getAccessToken();
-    console.log(
-      "applying middleware... the access token is " +
-        spotifyApi.getAccessToken()
-    );
-    // console.log("applying middleware...", spotifyAccessToken);
+    spotifyAccessToken
+      ? console.log("spotify access token exists, applying middleware...")
+      : console.warn("no spotify access token");
     request.headers.set("Authorization", `Bearer ${spotifyAccessToken}`);
   }
 }

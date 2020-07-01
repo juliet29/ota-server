@@ -3,8 +3,8 @@ import { Arg, Mutation, Query, Resolver, UseMiddleware } from "type-graphql";
 import { User } from "../../entity/User";
 import { isAuth } from "../middleware/isAuth";
 import { RegisterInput } from "./register/RegisterInput";
-import { sendEmail } from "../utils/sendEmail";
-import { createConfirmationUrl } from "../utils/createConfirmationUrl";
+// import { sendEmail } from "../utils/sendEmail";
+// import { createConfirmationUrl } from "../utils/createConfirmationUrl";
 
 @Resolver()
 export class RegisterResolver {
@@ -26,14 +26,15 @@ export class RegisterResolver {
     const hashedPassowrd = await bcrypt.hash(password, 12);
 
     // save the user into the database
-    const user = await User.create({
+    // const user =
+    await User.create({
       username,
       email,
       password: hashedPassowrd,
     }).save();
 
-    // send email to confirm
-    await sendEmail(email, await createConfirmationUrl(user.id));
+    // // send email to confirm
+    // await sendEmail(email, await createConfirmationUrl(user.id));
 
     return true;
   }
