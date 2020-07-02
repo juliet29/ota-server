@@ -16,8 +16,10 @@ export class SpotifyDataSource extends RESTDataSource {
   }
 
   async search(query: string, type: string) {
-    console.log(query);
-    return this.get(`search?q=${query}&type=${type}&limit=5`);
+    // console.log(query);
+    const result = await this.get(`search?q=${query}&type=${type}&limit=5`);
+    console.log("my res", result);
+    return result;
   }
 
   willSendRequest(request: RequestOptions) {
