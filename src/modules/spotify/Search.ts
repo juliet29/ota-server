@@ -1,13 +1,21 @@
 import { MyContext } from "src/types/MyContext";
 import { Arg, createUnionType, Ctx, Query, Resolver } from "type-graphql";
-import { ArtistSearchResult, TrackSearchResult } from "./SearchTypes";
+import {
+  ArtistSearchResult,
+  TrackSearchResult,
+  AlbumSearchResult,
+} from "./SearchTypes";
 
 // create union of search results
 const SearchResultUnion = createUnionType({
   name: "SearchResult",
-  types: () => [TrackSearchResult, ArtistSearchResult] as const,
+  types: () =>
+    [TrackSearchResult, ArtistSearchResult, AlbumSearchResult] as const,
 
   resolveType: (value) => {
+    if ("albums" in value) {
+      return AlbumSearchResult;
+    }
     if ("tracks" in value) {
       return TrackSearchResult;
     }

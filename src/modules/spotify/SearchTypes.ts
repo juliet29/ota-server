@@ -38,6 +38,8 @@ export class BaseSearchResponse extends BaseEntity {
 }
 
 // Possible objects to search by
+@ObjectType()
+export class Artist extends BaseSearchResponse {}
 
 @ObjectType()
 export class Album extends BaseSearchResponse {
@@ -47,9 +49,6 @@ export class Album extends BaseSearchResponse {
   @Field()
   album_type: string;
 }
-
-@ObjectType()
-export class Artist extends BaseSearchResponse {}
 
 @ObjectType()
 export class Track extends BaseSearchResponse {
@@ -63,6 +62,7 @@ export class Track extends BaseSearchResponse {
   track_number: number;
 }
 
+// TODO create a generic object type here
 // Search result items
 
 @ObjectType()
@@ -72,15 +72,15 @@ class ArtistItems {
 }
 
 @ObjectType()
-class TrackItems {
-  @Field(() => [Track])
-  items: Track[];
-}
-
-@ObjectType()
 class AlbumItems {
   @Field(() => [Album])
   items: Album[];
+}
+
+@ObjectType()
+class TrackItems {
+  @Field(() => [Track])
+  items: Track[];
 }
 
 // Search responses for an object
@@ -92,13 +92,13 @@ export class ArtistSearchResult {
 }
 
 @ObjectType()
-export class TrackSearchResult {
+export class AlbumSearchResult {
   @Field()
-  tracks: TrackItems;
+  albums: AlbumItems;
 }
 
 @ObjectType()
-export class AlbumSearchResult {
+export class TrackSearchResult {
   @Field()
-  tracks: AlbumItems;
+  tracks: TrackItems;
 }
