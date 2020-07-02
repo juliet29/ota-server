@@ -1,42 +1,18 @@
-import { Artist, Track } from "../../entity/Artist";
-import { Query, Resolver, Arg, Ctx, ObjectType, Field } from "type-graphql";
 import { MyContext } from "src/types/MyContext";
-import { createUnionType } from "type-graphql";
+import { Arg, createUnionType, Ctx, Query, Resolver } from "type-graphql";
+import { ArtistSearchResult, TrackSearchResult } from "./SearchTypes";
 
-@ObjectType()
-class ArtistItems {
-  @Field(() => [Artist])
-  items: Artist[];
-}
-
-@ObjectType()
-class TrackItems {
-  @Field(() => [Track])
-  items: Track[];
-}
-
-@ObjectType()
-class ArtistSearchResult {
-  @Field({ nullable: true })
-  artists: ArtistItems;
-}
-
-@ObjectType()
-class TrackSearchResult {
-  @Field()
-  tracks: TrackItems;
-}
-
+// create union of search results
 const SearchResultUnion = createUnionType({
-  name: "SearchResult", // the name of the GraphQL union
-  types: () => [TrackSearchResult, ArtistSearchResult] as const, // function that returns tuple of object types classes
+  name: "SearchResult",
+  types: () => [TrackSearchResult, ArtistSearchResult] as const,
 
   resolveType: (value) => {
     if ("tracks" in value) {
-      return TrackSearchResult; // we can return object type class (the one with `@ObjectType()`)
+      return TrackSearchResult;
     }
 
-    return ArtistSearchResult; // or the schema name of the type as a string
+    return ArtistSearchResult;
   },
 });
 
@@ -47,15 +23,8 @@ export class SearchResolver {
   search(
     @Arg("query") query: string,
     @Arg("type") type: string,
-    @Ctx() ctx: MyContext //   (_: any, { id }: any, { dataSources }: any)
+    @Ctx() ctx: MyContext
   ) {
-    //TODO remove duplicates
-
     return ctx.dataSources?.SpotifyAPI.search(encodeURIComponent(query), type);
-
-    // const tracks = await ctx.dataSources?.SpotifyAPI.search(
-    //   encodeURIComponent(query),
-    //   type
-    // );
   }
 }

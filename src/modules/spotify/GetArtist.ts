@@ -1,4 +1,4 @@
-import { Artist } from "../../entity/Artist";
+import { Artist } from "./SearchTypes";
 import { Query, Resolver, Arg, Ctx } from "type-graphql";
 import { MyContext } from "src/types/MyContext";
 

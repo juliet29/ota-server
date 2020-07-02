@@ -26,6 +26,7 @@ export const CreateSchema = () =>
       GetArtistResolver,
       SearchResolver,
     ],
+    nullableByDefault: true,
     //TODO remove this
     // userId cookie must be available on session to access authorized resolvers
     authChecker: ({ context: { req } }) => {
