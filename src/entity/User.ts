@@ -6,7 +6,7 @@ import {
   OneToMany,
 } from "typeorm";
 import { ObjectType, Field, ID } from "type-graphql";
-import { Post } from "./Post";
+import { BasePost } from "./BasePost";
 
 @ObjectType()
 @Entity()
@@ -34,6 +34,6 @@ export class User extends BaseEntity {
   confirmed: boolean;
 
   // one user can have many post assigned to them
-  @OneToMany(() => Post, (post) => post.user)
-  post: Post[];
+  @OneToMany(() => BasePost, (post) => post.user)
+  post: BasePost[];
 }

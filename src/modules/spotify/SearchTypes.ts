@@ -1,14 +1,13 @@
 import { Field, ObjectType } from "type-graphql";
-import { BaseEntity } from "typeorm";
 
 @ObjectType()
-export class ExternalUrl extends BaseEntity {
+export class ExternalUrl {
   @Field()
   spotify: string;
 }
 
 @ObjectType()
-export class Image extends BaseEntity {
+export class Image {
   @Field()
   url: string;
 
@@ -20,7 +19,10 @@ export class Image extends BaseEntity {
 }
 
 @ObjectType()
-export class BaseSearchResponse extends BaseEntity {
+export class BaseSearchResponse {
+  @Field()
+  id: string;
+
   @Field()
   uri: string;
 
@@ -48,6 +50,9 @@ export class Album extends BaseSearchResponse {
 
   @Field()
   album_type: string;
+
+  @Field(() => [Artist])
+  artists: Artist[];
 }
 
 @ObjectType()

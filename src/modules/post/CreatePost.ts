@@ -1,6 +1,6 @@
 import { Resolver, UseMiddleware, Mutation, Arg, Ctx } from "type-graphql";
 import { isAuth } from "../middleware/isAuth";
-import { Post } from "../../entity/Post";
+// import { BasePost } from "../../entity/BasePost";
 import { MyContext } from "../../types/MyContext";
 import { User } from "../../entity/User";
 import { AuthenticationError } from "apollo-server-express";
@@ -21,23 +21,23 @@ export class CreatePostResolver {
     if (!user) {
       throw new AuthenticationError("User not found");
     }
-    const timeSubmitted = new Date().toISOString();
+    // const timeSubmitted = new Date().toISOString();
 
-    // save the new post into the database
-    try {
-      await Post.create({
-        text,
-        link,
-        user, // TODO hmmm
-        timeSubmitted,
-        ...user,
-      }).save();
-    } catch (err) {
-      throw new Error(err);
-    }
+    // // save the new post into the database
+    // // try {
+    // //   await BasePost.create({
+    // //     text,
+    // //     link,
+    // //     user, // TODO hmmm
+    // //     timeSubmitted,
+    // //     ...user,
+    // //   }).save();
+    // // } catch (err) {
+    // //   throw new Error(err);
+    // // }
 
-    // TODO: save on the user table as well
+    // // TODO: save on the user table as well
 
-    return true;
+    return [text, link];
   }
 }
