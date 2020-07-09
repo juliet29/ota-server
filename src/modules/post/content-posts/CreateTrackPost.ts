@@ -22,6 +22,9 @@ export class TrackPostInput extends PostInput {
   @Field()
   vote: number; // make -1 or 1
 
+  @Field()
+  trackName: string;
+
   @Field(() => [String])
   artistNames: string[];
 }
@@ -32,7 +35,7 @@ export class CreateTrackPostResolver {
   @Mutation(() => TrackPost)
   async createTrackPost(
     @Arg("data")
-    { text, imageUrl, trackId, vote, artistNames }: TrackPostInput,
+    { text, imageUrl, trackId, vote, artistNames, trackName }: TrackPostInput,
     @Ctx() ctx: MyContext
   ) {
     // get the user from the context
@@ -50,6 +53,7 @@ export class CreateTrackPostResolver {
         trackId,
         vote,
         artistNames,
+        trackName,
         user,
       }).save();
     } catch (err) {

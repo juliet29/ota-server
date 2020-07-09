@@ -18,6 +18,9 @@ import { PostInput } from "../PostInput";
 export class ArtistPostInput extends PostInput {
   @Field()
   artistId: string;
+
+  @Field()
+  artistName: string;
 }
 
 @Resolver()
@@ -25,7 +28,7 @@ export class CreateArtistPostResolver {
   @UseMiddleware(isAuth)
   @Mutation(() => ArtistPost)
   async createArtistPost(
-    @Arg("data") { text, imageUrl, artistId }: ArtistPostInput,
+    @Arg("data") { text, imageUrl, artistId, artistName }: ArtistPostInput,
     @Ctx() ctx: MyContext
   ) {
     // get the user from the context
@@ -41,6 +44,7 @@ export class CreateArtistPostResolver {
         text,
         imageUrl,
         artistId,
+        artistName,
         user,
       }).save();
     } catch (err) {

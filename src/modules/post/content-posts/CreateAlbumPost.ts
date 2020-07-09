@@ -22,6 +22,9 @@ export class AlbumPostInput extends PostInput {
   @Field()
   rating: number;
 
+  @Field()
+  albumName: string;
+
   @Field(() => [String])
   artistNames: string[];
 }
@@ -32,7 +35,7 @@ export class CreateAlbumPostResolver {
   @Mutation(() => AlbumPost)
   async createAlbumPost(
     @Arg("data")
-    { text, imageUrl, albumId, rating, artistNames }: AlbumPostInput,
+    { text, imageUrl, albumId, rating, artistNames, albumName }: AlbumPostInput,
     @Ctx() ctx: MyContext
   ) {
     // get the user from the context
@@ -50,6 +53,7 @@ export class CreateAlbumPostResolver {
         albumId,
         rating,
         artistNames,
+        albumName,
         user,
       }).save();
     } catch (err) {

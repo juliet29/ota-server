@@ -12,9 +12,6 @@ const GetPostsResultUnion = createUnionType({
   name: "GetPostsResult",
   types: () => [AlbumPost, ArtistPost, TrackPost] as const,
   resolveType: (value) => {
-    if (value) {
-      console.log(Object.getOwnPropertyNames(value));
-    }
     if ("albumId" in value) {
       return AlbumPost;
     }
@@ -35,8 +32,6 @@ export class GetPostsResolver {
     const artists = await ArtistPost.find({ relations: ["user"] });
     const albums = await AlbumPost.find({ relations: ["user"] });
     const tracks = await TrackPost.find({ relations: ["user"] });
-
-    // console.log("my posts", allPosts);
 
     return [...artists, ...albums, ...tracks];
   }

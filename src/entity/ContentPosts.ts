@@ -18,6 +18,10 @@ export class ArtistPost extends BasePost {
   @Field()
   @Column()
   artistId: string;
+
+  @Field()
+  @Column()
+  artistName: string;
 }
 
 @ObjectType()
@@ -34,6 +38,10 @@ export class AlbumPost extends BasePost {
   @Field(() => [String])
   @Column("simple-array")
   artistNames: string[];
+
+  @Field()
+  @Column()
+  albumName: string;
 }
 
 @ObjectType()
@@ -50,4 +58,8 @@ export class TrackPost extends BasePost {
   @Field(() => [String])
   @Column("simple-array")
   artistNames: string[];
+
+  @Field()
+  @Column()
+  trackName: string;
 }
