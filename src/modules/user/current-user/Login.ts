@@ -1,10 +1,13 @@
 import { Resolver, Mutation, Arg, Ctx, ObjectType, Field } from "type-graphql";
 import bcrypt from "bcryptjs";
 
-import { User } from "../../entity/User";
-import { sendRefreshToken } from "../../utils-global/sendRefreshToken";
-import { createRefreshToken, createAccessToken } from "../../utils-global/auth";
-import { MyContext } from "../../types/MyContext";
+import { User } from "../../../entity/User";
+import { sendRefreshToken } from "../../../global-utils/sendRefreshToken";
+import {
+  createRefreshToken,
+  createAccessToken,
+} from "../../../global-utils/auth";
+import { MyContext } from "../../../types/MyContext";
 // import { MyContext } from "../../types/MyContext";
 // import { GraphQLError } from "graphql";
 

@@ -1,7 +1,7 @@
 // gets the user based on the cookie saved in the session
 import { Resolver, Query, Ctx } from "type-graphql";
-import { User } from "../../entity/User";
-import { MyContext } from "../../types/MyContext";
+import { User } from "../../../entity/User";
+import { MyContext } from "../../../types/MyContext";
 
 @Resolver()
 export class GetCurrentUserResolver {

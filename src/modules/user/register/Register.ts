@@ -1,9 +1,9 @@
 import bcrypt from "bcryptjs";
 import { Arg, Mutation, Query, Resolver, UseMiddleware } from "type-graphql";
-import { User } from "../../entity/User";
-import { isAuth } from "../middleware/isAuth";
-import { RegisterInput } from "./register/RegisterInput";
-// import { sendEmail } from "../utils/sendEmail";
+import { isAuth } from "../../../modules/middleware/isAuth";
+import { RegisterInput } from "./RegisterInput";
+import { User } from "../../../entity/User";
+
 // import { createConfirmationUrl } from "../utils/createConfirmationUrl";
 
 @Resolver()

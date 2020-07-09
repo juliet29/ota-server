@@ -7,14 +7,14 @@ import "reflect-metadata";
 import SpotifyWebApi from "spotify-web-api-node";
 import { User } from "./entity/User";
 import { SpotifyDataSource } from "./modules/spotify/SpotifyRestDataSource";
-import { createAccessToken, createRefreshToken } from "./utils-global/auth";
-import { CreateSchema } from "./utils-global/createSchema";
-import { createTypeormConnection } from "./utils-global/createTypeormConn";
+import { createAccessToken, createRefreshToken } from "./global-utils/auth";
+import { CreateSchema } from "./global-utils/createSchema";
+import { createTypeormConnection } from "./global-utils/createTypeormConn";
 import {
   SPOTIFY_CLIENT_ID,
   SPOTIFY_CLIENT_SECRET,
-} from "./utils-global/secrets";
-import { sendRefreshToken } from "./utils-global/sendRefreshToken";
+} from "./global-utils/secrets";
+import { sendRefreshToken } from "./global-utils/sendRefreshToken";
 
 export const spotifyApi = new SpotifyWebApi({
   clientId: SPOTIFY_CLIENT_ID,

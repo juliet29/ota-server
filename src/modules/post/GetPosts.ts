@@ -1,15 +1,43 @@
-import { Resolver, Query } from "type-graphql";
+import {
+  Resolver,
+  Query,
+  createUnionType,
+  // ObjectType,
+  // Field,
+} from "type-graphql";
 // import { isAuth } from "../middleware/isAuth";
-import { BasePost } from "../../entity/BasePost";
-import { getSpotifyAccessToken } from "../../utils-global/spotifyToken";
+import { ArtistPost, AlbumPost, TrackPost } from "../../entity/ContentPosts";
+
+const GetPostsResultUnion = createUnionType({
+  name: "GetPostsResult",
+  types: () => [AlbumPost, ArtistPost, TrackPost] as const,
+  resolveType: (value) => {
+    if (value) {
+      console.log(Object.getOwnPropertyNames(value));
+    }
+    if ("albumId" in value) {
+      return AlbumPost;
+    }
+    if ("trackId" in value) {
+      return TrackPost;
+    }
+
+    return ArtistPost;
+  },
+});
 
 @Resolver()
 export class GetPostsResolver {
   // return all the Posts in the db
   // @UseMiddleware(isAuth)
-  @Query(() => [BasePost])
+  @Query(() => [GetPostsResultUnion])
   async getPosts() {
-    console.log("do i have a secret", getSpotifyAccessToken());
-    return BasePost.find({ relations: ["user"] });
+    const artists = await ArtistPost.find({ relations: ["user"] });
+    const albums = await AlbumPost.find({ relations: ["user"] });
+    const tracks = await TrackPost.find({ relations: ["user"] });
+
+    // console.log("my posts", allPosts);
+
+    return [...artists, ...albums, ...tracks];
   }
 }

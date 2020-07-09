@@ -8,50 +8,16 @@ import {
   Resolver,
   UseMiddleware,
 } from "type-graphql";
-import { ArtistPost } from "../../entity/ContentPosts";
-import { User } from "../../entity/User";
-import { MyContext } from "../../types/MyContext";
-import { isAuth } from "../middleware/isAuth";
-
-// TODO: put in sep file
-@InputType()
-export class PostInput {
-  @Field()
-  text: string;
-
-  // TODO: validate url w IsUrl from "class-validators" --> see githun
-  @Field()
-  imageUrl: string;
-}
+import { ArtistPost } from "../../../entity/ContentPosts";
+import { User } from "../../../entity/User";
+import { MyContext } from "../../../types/MyContext";
+import { isAuth } from "../../middleware/isAuth";
+import { PostInput } from "../PostInput";
 
 @InputType()
 export class ArtistPostInput extends PostInput {
   @Field()
   artistId: string;
-}
-
-@InputType()
-export class AlbumPostInput extends PostInput {
-  @Field()
-  albumId: string;
-
-  @Field()
-  rating: string;
-
-  @Field(() => [String])
-  artistNames: string[];
-}
-
-@InputType()
-export class TrackPostInput extends PostInput {
-  @Field()
-  trackId: string;
-
-  @Field()
-  vote: number; // make -1 or 1
-
-  @Field(() => [String])
-  artistNames: string[];
 }
 
 @Resolver()
@@ -75,7 +41,7 @@ export class CreateArtistPostResolver {
         text,
         imageUrl,
         artistId,
-        ...user,
+        user,
       }).save();
     } catch (err) {
       throw new Error(err);
