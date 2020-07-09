@@ -4,6 +4,14 @@ import { Field, ObjectType } from "type-graphql";
 import { Column, Entity } from "typeorm";
 import { BasePost } from "./BasePost";
 
+///TODO: abstract artist names
+// @ObjectType()
+// export class ArtistNames {
+//   @Field(() => [String])
+//   @Column("simple-array")
+//   artistNames: string[];
+// }
+
 @ObjectType()
 @Entity()
 export class ArtistPost extends BasePost {

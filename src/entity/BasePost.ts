@@ -17,21 +17,21 @@ export class BasePost extends BaseEntity {
   id: number;
 
   @Field()
+  @CreateDateColumn()
+  timeSubmitted: Date;
+
+  @Field()
   @Column()
   text: string;
+
+  @ManyToOne(() => User, (user) => user.post)
+  @Field(() => User)
+  user: User;
 
   // link to song, artist, album are not mandatory, so field is nullable
   @Field({ nullable: true })
   @Column()
   imageUrl?: string;
 
-  @Field()
-  @CreateDateColumn()
-  timeSubmitted: Date;
-
   // @CreateDateColumn is a special column that is automatically set to the entity's insertion date. You don't need to set this column - it will be automatically set.
-
-  @ManyToOne(() => User, (user) => user.post)
-  @Field(() => User)
-  user: User;
 }

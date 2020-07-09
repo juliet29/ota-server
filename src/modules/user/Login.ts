@@ -33,8 +33,10 @@ export class LoginResolver {
       throw new Error("could not find user");
     }
 
-    // if we find the user, compare the passwords entered
+    // // if we find the user, compare the passwords entered
     const valid = await bcrypt.compare(password, user.password);
+    // console.log(password);
+    // const valid = true;
 
     if (!valid) {
       console.log("password not valid");
