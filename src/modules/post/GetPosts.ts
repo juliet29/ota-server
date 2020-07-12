@@ -2,6 +2,7 @@ import {
   Resolver,
   Query,
   createUnionType,
+  Arg,
   // ObjectType,
   // Field,
 } from "type-graphql";
@@ -34,5 +35,34 @@ export class GetPostsResolver {
     const tracks = await TrackPost.find({ relations: ["user"] });
 
     return [...artists, ...albums, ...tracks];
+  }
+
+  @Query(() => [ArtistPost])
+  async getArtistPosts(@Arg("id") id: string) {
+    const artists = await ArtistPost.find({
+      relations: ["user"],
+      where: { artistId: id },
+    });
+
+    return [...artists];
+  }
+
+  @Query(() => [AlbumPost])
+  async getAlbumPosts(@Arg("id") id: string) {
+    const albums = await AlbumPost.find({
+      relations: ["user"],
+      where: { albumId: id },
+    });
+    return [...albums];
+  }
+
+  @Query(() => [TrackPost])
+  async getTrackPosts(@Arg("id") id: string) {
+    const tracks = await TrackPost.find({
+      relations: ["user"],
+      where: { trackId: id },
+    });
+
+    return [...tracks];
   }
 }

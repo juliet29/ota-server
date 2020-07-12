@@ -11,8 +11,18 @@ export class SpotifyDataSource extends RESTDataSource {
     this.baseURL = "https://api.spotify.com/v1/";
   }
 
-  async getArtist(id: string) {
-    return this.get(`artists/${id}`);
+  async getAlbumTracks(id: string) {
+    return this.get(`albums/${id}/tracks?market=US&limit=10`);
+  }
+
+  async getArtistAlbums(id: string) {
+    return this.get(
+      `artists/${id}/albums?include_groups=album&market=US&limit=8`
+    );
+  }
+
+  async getArtistTopTracks(id: string) {
+    return this.get(`artists/${id}/top-tracks?country=US`);
   }
 
   async search(query: string, type: string) {

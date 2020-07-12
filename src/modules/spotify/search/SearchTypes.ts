@@ -64,7 +64,7 @@ export class Track extends BaseSearchResponse {
   artists: Artist[];
 
   @Field()
-  track_number: number;
+  track_number?: number;
 }
 
 // TODO create a generic object type here

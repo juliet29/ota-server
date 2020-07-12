@@ -19,8 +19,8 @@ export class TrackPostInput extends PostInput {
   @Field()
   trackId: string;
 
-  @Field()
-  vote: number; // make -1 or 1
+  @Field({ nullable: true })
+  vote?: number; // make -1 or 1
 
   @Field()
   trackName: string;
@@ -44,6 +44,9 @@ export class CreateTrackPostResolver {
       throw new AuthenticationError("User not found");
     }
     console.log(ctx);
+    if (!vote) {
+      vote = 0;
+    }
 
     let newPost: TrackPost;
     try {
