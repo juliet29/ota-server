@@ -35,7 +35,15 @@ export class CreateAlbumPostResolver {
   @Mutation(() => AlbumPost)
   async createAlbumPost(
     @Arg("data")
-    { text, imageUrl, albumId, rating, artistNames, albumName }: AlbumPostInput,
+    {
+      text,
+      imageUrl,
+      albumId,
+      rating,
+      artistNames,
+      externalUrl,
+      albumName,
+    }: AlbumPostInput,
     @Ctx() ctx: MyContext
   ) {
     // get the user from the context
@@ -52,6 +60,7 @@ export class CreateAlbumPostResolver {
         imageUrl,
         albumId,
         rating,
+        externalUrl,
         artistNames,
         albumName,
         user,

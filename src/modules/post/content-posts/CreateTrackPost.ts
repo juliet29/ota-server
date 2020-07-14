@@ -35,7 +35,15 @@ export class CreateTrackPostResolver {
   @Mutation(() => TrackPost)
   async createTrackPost(
     @Arg("data")
-    { text, imageUrl, trackId, vote, artistNames, trackName }: TrackPostInput,
+    {
+      text,
+      imageUrl,
+      trackId,
+      vote,
+      artistNames,
+      trackName,
+      externalUrl,
+    }: TrackPostInput,
     @Ctx() ctx: MyContext
   ) {
     // get the user from the context
@@ -56,6 +64,7 @@ export class CreateTrackPostResolver {
         trackId,
         vote,
         artistNames,
+        externalUrl,
         trackName,
         user,
       }).save();

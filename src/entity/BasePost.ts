@@ -24,6 +24,10 @@ export class BasePost extends BaseEntity {
   @Column()
   text: string;
 
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  externalUrl: string;
+
   @ManyToOne(() => User, (user) => user.post)
   @Field(() => User)
   user: User;

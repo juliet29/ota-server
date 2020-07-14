@@ -9,4 +9,7 @@ export class PostInput {
   // TODO: validate url w IsUrl from "class-validators" --> see githun
   @Field()
   imageUrl: string;
+
+  @Field()
+  externalUrl: string;
 }

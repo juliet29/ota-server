@@ -35,8 +35,8 @@ export class BaseSearchResponse {
   @Field(() => [Image])
   images: Image[];
 
-  @Field(() => [ExternalUrl])
-  external_urls: ExternalUrl[];
+  @Field()
+  external_urls: ExternalUrl;
 }
 
 // Possible objects to search by

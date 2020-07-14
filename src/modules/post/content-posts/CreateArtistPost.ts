@@ -28,7 +28,8 @@ export class CreateArtistPostResolver {
   @UseMiddleware(isAuth)
   @Mutation(() => ArtistPost)
   async createArtistPost(
-    @Arg("data") { text, imageUrl, artistId, artistName }: ArtistPostInput,
+    @Arg("data")
+    { text, imageUrl, artistId, artistName, externalUrl }: ArtistPostInput,
     @Ctx() ctx: MyContext
   ) {
     // get the user from the context
@@ -45,6 +46,7 @@ export class CreateArtistPostResolver {
         imageUrl,
         artistId,
         artistName,
+        externalUrl,
         user,
       }).save();
     } catch (err) {

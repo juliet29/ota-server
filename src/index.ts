@@ -97,9 +97,7 @@ const main = async () => {
 
   // connect to postgresql database, run migrations if needed
   const conn = await createTypeormConnection();
-  await conn.runMigrations({
-    transaction: "each",
-  });
+  await conn.runMigrations();
   console.log("ran migrations");
 
   // create schema for Apollo from resolvers
