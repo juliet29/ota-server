@@ -12,7 +12,7 @@
     "port": 5432,
     "username": "julietnu",
     "database": "otadb",
-    "synchronize": false,
+    "synchronize": true,
     "logging": true,
     "entities": ["src/entity/**.*"],
     "migrations": ["src/migration/**/*.ts"],

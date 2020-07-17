@@ -15,11 +15,21 @@ import {
   SPOTIFY_CLIENT_SECRET,
 } from "./global-utils/secrets";
 import { sendRefreshToken } from "./global-utils/sendRefreshToken";
+import { facebookStrategy } from "./global-utils/facebookPassport";
+
+import passport from "passport";
 
 export const spotifyApi = new SpotifyWebApi({
   clientId: SPOTIFY_CLIENT_ID,
   clientSecret: SPOTIFY_CLIENT_SECRET,
 });
+
+export const port = process.env.PORT || 4000;
+
+export const url =
+  process.env.NODE_ENV === "production"
+    ? "https://peaceful-oasis-92942.herokuapp.com"
+    : `http://localhost:${port}`;
 
 const main = async () => {
   const app = Express();
@@ -29,18 +39,14 @@ const main = async () => {
       origin: "http://localhost:19006", // where the app will be hosted TODO: change this for expo
     })
   );
-  const port = process.env.PORT || 4000;
-
-  const url =
-    process.env.NODE_ENV === "production"
-      ? "https://peaceful-oasis-92942.herokuapp.com/graphql"
-      : `http://localhost:${port}/graphql`;
 
   app.use(cookieParser());
 
   ////////// HOME PAGE ///////////////
   app.get("/", (_req, res) =>
-    res.send(`Welcome to the OnTheAuxServer. GraphQL playground is at ${url}`)
+    res.send(
+      `Welcome to the OnTheAuxServer. GraphQL playground is at ${url}/graphql`
+    )
   );
 
   ////////// REFRESH TOKEN FOR USER AUTH ///////////////
@@ -67,6 +73,24 @@ const main = async () => {
 
     return res.send({ ok: true, accessToken: createAccessToken(user) });
   });
+
+  ////////// FACEBOOK OAUTH ///////////////
+  passport.use("FacebookStrategy", facebookStrategy);
+
+  app.use(passport.initialize());
+
+  app.get("/auth/facebook", passport.authenticate("FacebookStrategy"));
+
+  app.get(
+    "/auth/facebook/callback",
+    passport.authenticate("FacebookStrategy", { session: false }),
+    (req, res) => {
+      console.log((req.user as any).id);
+      // (req.session as any).userId = (req.user as any).id;
+      // @todo redirect to frontend
+      res.redirect("/");
+    }
+  );
 
   ////////// SPOTIFY CLIENT CREDENTIALS AUTH ///////////////
 

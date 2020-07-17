@@ -19,15 +19,15 @@ export class User extends BaseEntity {
   @Column()
   username: string;
 
-  @Field()
-  @Column("text", { unique: true })
-  email: string;
+  @Field(() => String)
+  @Column("text", { unique: true, nullable: true })
+  email: string | null;
 
   @Column("text", { nullable: true })
   password: string;
 
-  // @Column("text", { nullable: true })
-  // spotifyId: string | null;
+  @Column("text", { nullable: true })
+  facebookId: string | null;
 
   // TODO: reset default to be false after implement confirm user functionality
   @Column("bool", { default: true })
