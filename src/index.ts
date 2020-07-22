@@ -24,12 +24,17 @@ export const spotifyApi = new SpotifyWebApi({
   clientSecret: SPOTIFY_CLIENT_SECRET,
 });
 
-export const port = process.env.PORT || 4000;
+const port = process.env.PORT || 4000;
 
-export const url =
+const url =
   process.env.NODE_ENV === "production"
     ? "https://peaceful-oasis-92942.herokuapp.com"
     : `http://localhost:${port}`;
+
+const redirectUrl =
+  process.env.NODE_ENV === "production"
+    ? "exp://192.168.0.27:19000"
+    : "http://localhost:19006";
 
 const main = async () => {
   const app = Express();
@@ -88,7 +93,7 @@ const main = async () => {
       console.log((req.user as any).id);
       // (req.session as any).userId = (req.user as any).id;
       // @todo redirect to frontend
-      res.redirect("/");
+      res.redirect(redirectUrl);
     }
   );
 
@@ -140,7 +145,7 @@ const main = async () => {
   apolloServer.applyMiddleware({ app, cors: false });
 
   app.listen(port, () => {
-    console.log(`server started on ${url}`);
+    console.log(`server started on ${url}/grqphql`);
   });
 };
 

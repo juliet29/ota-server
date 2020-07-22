@@ -17,6 +17,21 @@ export class RegisterInput extends PasswordInput {
   @IsEmailAlreadyInUse({ message: "Email is already in use" })
   email: string;
 
-  @Field()
+  @Field({ nullable: true })
   password: string;
+}
+
+@InputType()
+export class FacebookRegisterInput {
+  @Field()
+  @Length(1, 255)
+  id: string;
+
+  @Field()
+  @Length(1, 255)
+  username: string;
+
+  @Field()
+  @IsEmail()
+  email: string;
 }
