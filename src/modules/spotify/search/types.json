@@ -1,0 +1,491 @@
+// album tracks
+{
+  "href": "https://api.spotify.com/v1/albums/6akEvsycLGftJxYudPjmqK/tracks?offset=0&limit=2",
+  "items": [ {
+    "artists": [ {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/08td7MxkoHQkXnWAYD8d6Q"
+      },
+      "href": "https://api.spotify.com/v1/artists/08td7MxkoHQkXnWAYD8d6Q",
+      "id": "08td7MxkoHQkXnWAYD8d6Q",
+      "name": "Tania Bowra",
+      "type": "artist",
+      "uri": "spotify:artist:08td7MxkoHQkXnWAYD8d6Q"
+    } ],
+    "available_markets": [ "AD", "AR", "AT", "AU", "BE", "BG", "BO", "BR", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "EC", "EE", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HU", "IE", "IS", "IT", "LI", "LT", "LU", "LV", "MC", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "PA", "PE", "PH", "PL", "PT", "PY", "RO", "SE", "SG", "SI", "SK", "SV", "TR", "TW", "US", "UY" ],
+    "disc_number": 1,
+    "duration_ms": 276773,
+    "explicit": false,
+    "external_urls": {
+      "spotify": "https://open.spotify.com/track/2TpxZ7JUBn3uw46aR7qd6V"
+    },
+    "href": "https://api.spotify.com/v1/tracks/2TpxZ7JUBn3uw46aR7qd6V",
+    "id": "2TpxZ7JUBn3uw46aR7qd6V",
+    "name": "All I Want",
+    "preview_url": "https://p.scdn.co/mp3-preview/6d00206e32194d15df329d4770e4fa1f2ced3f57",
+    "track_number": 1,
+    "type": "track",
+    "uri": "spotify:track:2TpxZ7JUBn3uw46aR7qd6V"
+  }, {
+    "artists": [ {
+      "external_urls": {
+        "spotify": "https://open.spotify.com/artist/08td7MxkoHQkXnWAYD8d6Q"
+      },
+      "href": "https://api.spotify.com/v1/artists/08td7MxkoHQkXnWAYD8d6Q",
+      "id": "08td7MxkoHQkXnWAYD8d6Q",
+      "name": "Tania Bowra",
+      "type": "artist",
+      "uri": "spotify:artist:08td7MxkoHQkXnWAYD8d6Q"
+    } ],
+    "available_markets": [ "AD", "AR", "AT", "AU", "BE", "BG", "BO", "BR", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "EC", "EE", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HU", "IE", "IS", "IT", "LI", "LT", "LU", "LV", "MC", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "PA", "PE", "PH", "PL", "PT", "PY", "RO", "SE", "SG", "SI", "SK", "SV", "TR", "TW", "US", "UY" ],
+    "disc_number": 1,
+    "duration_ms": 247680,
+    "explicit": false,
+    "external_urls": {
+      "spotify": "https://open.spotify.com/track/4PjcfyZZVE10TFd9EKA72r"
+    },
+    "href": "https://api.spotify.com/v1/tracks/4PjcfyZZVE10TFd9EKA72r",
+    "id": "4PjcfyZZVE10TFd9EKA72r",
+    "name": "Someday",
+    "preview_url": "https://p.scdn.co/mp3-preview/2b15de922bf4f4b8cfe09c8448079b8ff7a45a5f",
+    "track_number": 2,
+    "type": "track",
+    "uri": "spotify:track:4PjcfyZZVE10TFd9EKA72r"
+  } ],
+  "limit": 2,
+  "next": "https://api.spotify.com/v1/albums/6akEvsycLGftJxYudPjmqK/tracks?offset=2&limit=2",
+  "offset": 0,
+  "previous": null,
+  "total": 11
+}
+
+
+/// astist top albums 
+{
+  "href": "https://api.spotify.com/v1/artists/1vCWHaC5f2uS3yhpwWbIA6/albums?offset=0&limit=2&include_groups=album&market=US",
+  "items": [
+    {
+      "album_group": "album",
+      "album_type": "album",
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/1vCWHaC5f2uS3yhpwWbIA6"
+          },
+          "href": "https://api.spotify.com/v1/artists/1vCWHaC5f2uS3yhpwWbIA6",
+          "id": "1vCWHaC5f2uS3yhpwWbIA6",
+          "name": "Avicii",
+          "type": "artist",
+          "uri": "spotify:artist:1vCWHaC5f2uS3yhpwWbIA6"
+        }
+      ],
+      "external_urls": {
+        "spotify": "https://open.spotify.com/album/6Ad1E9vl75ZB3Ir87zwXIJ"
+      },
+      "href": "https://api.spotify.com/v1/albums/6Ad1E9vl75ZB3Ir87zwXIJ",
+      "id": "6Ad1E9vl75ZB3Ir87zwXIJ",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b273660ee24281a547103f466ff5",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://i.scdn.co/image/ab67616d00001e02660ee24281a547103f466ff5",
+          "width": 300
+        },
+        {
+          "height": 64,
+          "url": "https://i.scdn.co/image/ab67616d00004851660ee24281a547103f466ff5",
+          "width": 64
+        }
+      ],
+      "name": "TIM",
+      "release_date": "2019-06-06",
+      "release_date_precision": "day",
+      "total_tracks": 12,
+      "type": "album",
+      "uri": "spotify:album:6Ad1E9vl75ZB3Ir87zwXIJ"
+    },
+    {
+      "album_group": "album",
+      "album_type": "album",
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/1vCWHaC5f2uS3yhpwWbIA6"
+          },
+          "href": "https://api.spotify.com/v1/artists/1vCWHaC5f2uS3yhpwWbIA6",
+          "id": "1vCWHaC5f2uS3yhpwWbIA6",
+          "name": "Avicii",
+          "type": "artist",
+          "uri": "spotify:artist:1vCWHaC5f2uS3yhpwWbIA6"
+        }
+      ],
+      "external_urls": {
+        "spotify": "https://open.spotify.com/album/7dqftJ3kas6D0VAdmt3k3V"
+      },
+      "href": "https://api.spotify.com/v1/albums/7dqftJ3kas6D0VAdmt3k3V",
+      "id": "7dqftJ3kas6D0VAdmt3k3V",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b2735393c5d3cac806092a9bc468",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://i.scdn.co/image/ab67616d00001e025393c5d3cac806092a9bc468",
+          "width": 300
+        },
+        {
+          "height": 64,
+          "url": "https://i.scdn.co/image/ab67616d000048515393c5d3cac806092a9bc468",
+          "width": 64
+        }
+      ],
+      "name": "Stories",
+      "release_date": "2015-10-02",
+      "release_date_precision": "day",
+      "total_tracks": 14,
+      "type": "album",
+      "uri": "spotify:album:7dqftJ3kas6D0VAdmt3k3V"
+    }
+  ],
+  "limit": 2,
+  "next": "https://api.spotify.com/v1/artists/1vCWHaC5f2uS3yhpwWbIA6/albums?offset=2&limit=2&include_groups=album&market=US",
+  "offset": 0,
+  "previous": null,
+  "total": 5
+}
+
+
+/// artist top tracks 
+
+{
+  "tracks": [
+    {
+      "album": {
+        "album_type": "album",
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/43ZHCT0cAZBISjO8DG9PnE"
+            },
+            "href": "https://api.spotify.com/v1/artists/43ZHCT0cAZBISjO8DG9PnE",
+            "id": "43ZHCT0cAZBISjO8DG9PnE",
+            "name": "Elvis Presley",
+            "type": "artist",
+            "uri": "spotify:artist:43ZHCT0cAZBISjO8DG9PnE"
+          }
+        ],
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/7xe8VI48TxUpU1IIo0RfGi"
+        },
+        "href": "https://api.spotify.com/v1/albums/7xe8VI48TxUpU1IIo0RfGi",
+        "id": "7xe8VI48TxUpU1IIo0RfGi",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/ab67616d0000b273f96cefb0197694ad440c3314",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/ab67616d00001e02f96cefb0197694ad440c3314",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://i.scdn.co/image/ab67616d00004851f96cefb0197694ad440c3314",
+            "width": 64
+          }
+        ],
+        "name": "Blue Hawaii",
+        "release_date": "1961-10-20",
+        "release_date_precision": "day",
+        "total_tracks": 14,
+        "type": "album",
+        "uri": "spotify:album:7xe8VI48TxUpU1IIo0RfGi"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/43ZHCT0cAZBISjO8DG9PnE"
+          },
+          "href": "https://api.spotify.com/v1/artists/43ZHCT0cAZBISjO8DG9PnE",
+          "id": "43ZHCT0cAZBISjO8DG9PnE",
+          "name": "Elvis Presley",
+          "type": "artist",
+          "uri": "spotify:artist:43ZHCT0cAZBISjO8DG9PnE"
+        }
+      ],
+      "disc_number": 1,
+      "duration_ms": 182360,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "USRC16101350"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/44AyOl4qVkzS48vBsbNXaC"
+      },
+      "href": "https://api.spotify.com/v1/tracks/44AyOl4qVkzS48vBsbNXaC",
+      "id": "44AyOl4qVkzS48vBsbNXaC",
+      "is_local": false,
+      "is_playable": true,
+      "name": "Can't Help Falling in Love",
+      "popularity": 77,
+      "preview_url": "https://p.scdn.co/mp3-preview/994ebd7f49e4e935df56d450b0c12d8bad8bb9f4?cid=774b29d4f13844c495f206cafdad9c86",
+      "track_number": 5,
+      "type": "track",
+      "uri": "spotify:track:44AyOl4qVkzS48vBsbNXaC"
+    },
+    {
+      "album": {
+        "album_type": "album",
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/43ZHCT0cAZBISjO8DG9PnE"
+            },
+            "href": "https://api.spotify.com/v1/artists/43ZHCT0cAZBISjO8DG9PnE",
+            "id": "43ZHCT0cAZBISjO8DG9PnE",
+            "name": "Elvis Presley",
+            "type": "artist",
+            "uri": "spotify:artist:43ZHCT0cAZBISjO8DG9PnE"
+          }
+        ],
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/0C3t1htEDTFKcg7F2rNbek"
+        },
+        "href": "https://api.spotify.com/v1/albums/0C3t1htEDTFKcg7F2rNbek",
+        "id": "0C3t1htEDTFKcg7F2rNbek",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/ab67616d0000b27320ee3e86e17f17239bef1f76",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/ab67616d00001e0220ee3e86e17f17239bef1f76",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://i.scdn.co/image/ab67616d0000485120ee3e86e17f17239bef1f76",
+            "width": 64
+          }
+        ],
+        "name": "Elvis' Golden Records",
+        "release_date": "1958-03-21",
+        "release_date_precision": "day",
+        "total_tracks": 14,
+        "type": "album",
+        "uri": "spotify:album:0C3t1htEDTFKcg7F2rNbek"
+      },
+    ]
+
+
+
+
+// search results 
+[
+  {
+    "artists": {
+      "href": "https://api.spotify.com/v1/search?query=tania+bowra&offset=0&limit=20&type=artist",
+      "items": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/08td7MxkoHQkXnWAYD8d6Q"
+          },
+          "genres": [],
+          "href": "https://api.spotify.com/v1/artists/08td7MxkoHQkXnWAYD8d6Q",
+          "id": "08td7MxkoHQkXnWAYD8d6Q",
+          "images": [
+            {
+              "height": 640,
+              "url": "https://i.scdn.co/image/f2798ddab0c7b76dc2d270b65c4f67ddef7f6718",
+              "width": 640
+            },
+            {
+              "height": 300,
+              "url": "https://i.scdn.co/image/b414091165ea0f4172089c2fc67bb35aa37cfc55",
+              "width": 300
+            },
+            {
+              "height": 64,
+              "url": "https://i.scdn.co/image/8522fc78be4bf4e83fea8e67bb742e7d3dfe21b4",
+              "width": 64
+            }
+          ],
+          "name": "Tania Bowra",
+          "popularity": 0,
+          "type": "artist",
+          "uri": "spotify:artist:08td7MxkoHQkXnWAYD8d6Q"
+        }
+      ],
+      "limit": 20,
+      "next": null,
+      "offset": 0,
+      "previous": null,
+      "total": 1
+    }
+  },
+
+  {
+    "tracks": {
+      "href": "https://api.spotify.com/v1/search?query=hello+&type=track&offset=0&limit=1",
+      "items": [
+        {
+          "album": {
+            "album_type": "single",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/3l0CmX0FuQjFxr8SK7Vqag"
+                },
+                "href": "https://api.spotify.com/v1/artists/3l0CmX0FuQjFxr8SK7Vqag",
+                "id": "3l0CmX0FuQjFxr8SK7Vqag",
+                "name": "Clairo",
+                "type": "artist",
+                "uri": "spotify:artist:3l0CmX0FuQjFxr8SK7Vqag"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/3NEDQmYF1roygFssVEwkwv"
+            },
+            "href": "https://api.spotify.com/v1/albums/3NEDQmYF1roygFssVEwkwv",
+            "id": "3NEDQmYF1roygFssVEwkwv",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273bf94e27360806b5aa5025f93",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02bf94e27360806b5aa5025f93",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851bf94e27360806b5aa5025f93",
+                "width": 64
+              }
+            ],
+            "name": "diary 001",
+            "release_date": "2018-05-25",
+            "release_date_precision": "day",
+            "total_tracks": 6,
+            "type": "album",
+            "uri": "spotify:album:3NEDQmYF1roygFssVEwkwv"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/3l0CmX0FuQjFxr8SK7Vqag"
+              },
+              "href": "https://api.spotify.com/v1/artists/3l0CmX0FuQjFxr8SK7Vqag",
+              "id": "3l0CmX0FuQjFxr8SK7Vqag",
+              "name": "Clairo",
+              "type": "artist",
+              "uri": "spotify:artist:3l0CmX0FuQjFxr8SK7Vqag"
+            },
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/3lLHpTOJ11tWiUNGYN14gt"
+              },
+              "href": "https://api.spotify.com/v1/artists/3lLHpTOJ11tWiUNGYN14gt",
+              "id": "3lLHpTOJ11tWiUNGYN14gt",
+              "name": "Rejjie Snow",
+              "type": "artist",
+              "uri": "spotify:artist:3lLHpTOJ11tWiUNGYN14gt"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 135016,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "US4HB1800005"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/7qwt4xUIqQWCu1DJf96g2k"
+          },
+          "href": "https://api.spotify.com/v1/tracks/7qwt4xUIqQWCu1DJf96g2k",
+          "id": "7qwt4xUIqQWCu1DJf96g2k",
+          "is_local": false,
+          "name": "Hello?",
+          "popularity": 75,
+          "preview_url": null,
+          "track_number": 1,
+          "type": "track",
+          "uri": "spotify:track:7qwt4xUIqQWCu1DJf96g2k"
+        }
+      ],
+      "limit": 1,
+      "next": "https://api.spotify.com/v1/search?query=hello+&type=track&offset=1&limit=1",
+      "offset": 0,
+      "previous": null,
+      "total": 73319
+    }
+  },
+
+  {
+    "albums": {
+      "href": "https://api.spotify.com/v1/search?query=hello+&type=album&offset=0&limit=1",
+      "items": [
+        {
+          "album_type": "album",
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/4VhL8KLjVso4vLfOLVViTb"
+              },
+              "href": "https://api.spotify.com/v1/artists/4VhL8KLjVso4vLfOLVViTb",
+              "id": "4VhL8KLjVso4vLfOLVViTb",
+              "name": "Bridgit Mendler",
+              "type": "artist",
+              "uri": "spotify:artist:4VhL8KLjVso4vLfOLVViTb"
+            }
+          ],
+          "external_urls": {
+            "spotify": "https://open.spotify.com/album/114sumrk5wTeMWHVin86QC"
+          },
+          "href": "https://api.spotify.com/v1/albums/114sumrk5wTeMWHVin86QC",
+          "id": "114sumrk5wTeMWHVin86QC",
+          "images": [
+            {
+              "height": 640,
+              "url": "https://i.scdn.co/image/ab67616d0000b273c0758d813c09f649f630f405",
+              "width": 640
+            },
+            {
+              "height": 300,
+              "url": "https://i.scdn.co/image/ab67616d00001e02c0758d813c09f649f630f405",
+              "width": 300
+            },
+            {
+              "height": 64,
+              "url": "https://i.scdn.co/image/ab67616d00004851c0758d813c09f649f630f405",
+              "width": 64
+            }
+          ],
+          "name": "Hello My Name Is...",
+          "release_date": "2012-01-01",
+          "release_date_precision": "day",
+          "total_tracks": 12,
+          "type": "album",
+          "uri": "spotify:album:114sumrk5wTeMWHVin86QC"
+        }
+      ],
+      "limit": 1,
+      "next": "https://api.spotify.com/v1/search?query=hello+&type=album&offset=1&limit=1",
+      "offset": 0,
+      "previous": null,
+      "total": 9164
+    }
+  }
+]
+

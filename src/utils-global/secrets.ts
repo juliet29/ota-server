@@ -1,2 +1,0 @@
-export const SPOTIFY_CLIENT_ID = "16ecb71937474d49bf1cd3c7d77a8850";
-export const SPOTIFY_CLIENT_SECRET = "5b9cab46772944abb95ea34f03de6e45";

@@ -1,4 +1,4 @@
-import { CreateSchema } from "../utils-global/createSchema";
+import { CreateSchema } from "../global-utils/createSchema";
 import { graphql, GraphQLSchema } from "graphql";
 import { Maybe } from "graphql/jsutils/Maybe";
 

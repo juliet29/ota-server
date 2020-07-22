@@ -1,21 +1,35 @@
-import "reflect-metadata";
 import { ApolloServer } from "apollo-server-express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import Express from "express";
-import { CreateSchema } from "./utils-global/createSchema";
-import { createTypeormConnection } from "./utils-global/createTypeormConn";
 import { verify } from "jsonwebtoken";
+import "reflect-metadata";
+import SpotifyWebApi from "spotify-web-api-node";
 import { User } from "./entity/User";
-import { sendRefreshToken } from "./utils-global/sendRefreshToken";
-import { createRefreshToken, createAccessToken } from "./utils-global/auth";
-// import * as passport from "passport";
-const passport = require("passport");
-const SpotifyStrategy = require("passport-spotify").Strategy;
+import { SpotifyDataSource } from "./modules/spotify/SpotifyRestDataSource";
+import { createAccessToken, createRefreshToken } from "./global-utils/auth";
+import { CreateSchema } from "./global-utils/createSchema";
+import { createTypeormConnection } from "./global-utils/createTypeormConn";
 import {
   SPOTIFY_CLIENT_ID,
   SPOTIFY_CLIENT_SECRET,
-} from "./utils-global/secrets";
+} from "./global-utils/secrets";
+import { sendRefreshToken } from "./global-utils/sendRefreshToken";
+import { facebookStrategy } from "./global-utils/facebookPassport";
+
+import passport from "passport";
+
+export const spotifyApi = new SpotifyWebApi({
+  clientId: SPOTIFY_CLIENT_ID,
+  clientSecret: SPOTIFY_CLIENT_SECRET,
+});
+
+export const port = process.env.PORT || 4000;
+
+export const url =
+  process.env.NODE_ENV === "production"
+    ? "https://peaceful-oasis-92942.herokuapp.com"
+    : `http://localhost:${port}`;
 
 const main = async () => {
   const app = Express();
@@ -25,12 +39,17 @@ const main = async () => {
       origin: "http://localhost:19006", // where the app will be hosted TODO: change this for expo
     })
   );
+
   app.use(cookieParser());
-  // home page
+
+  ////////// HOME PAGE ///////////////
   app.get("/", (_req, res) =>
-    res.send("Welcome to the OnTheAuxServer. GraphQL playground is at /graphql")
+    res.send(
+      `Welcome to the OnTheAuxServer. GraphQL playground is at ${url}/graphql`
+    )
   );
-  // refresh token page
+
+  ////////// REFRESH TOKEN FOR USER AUTH ///////////////
   app.post("/refresh_token", async (req, res) => {
     const token = req.cookies.jid;
     if (!token) {
@@ -43,74 +62,67 @@ const main = async () => {
       console.log(err);
       return res.send({ ok: false, accessToken: "" });
     }
-    // token is valid, send back an access token
+
     const user = await User.findOne({ id: payload.userId });
     if (!user) {
       return res.send({ ok: false, accessToken: "" });
     }
     //TODO versions
+    // token is valid, send back an access token
     sendRefreshToken(res, createRefreshToken(user));
 
     return res.send({ ok: true, accessToken: createAccessToken(user) });
   });
 
-  // connect to postgresql database, run migrations if needed
-  const conn = await createTypeormConnection();
-  await conn.runMigrations();
-
-  // SPOTIFY AUTH!!!!!!!!!!!!//////
-  console.log(`spot id: ${SPOTIFY_CLIENT_ID}`);
-
-  // if (process.env.NODE_ENV === "production") {
-  //   const url = "https://peaceful-oasis-92942.herokuapp.com"
-  // } else {
-  //   const url = "http://localhost:4000"
-  // }
-
-  const url =
-    process.env.NODE_ENV === "production"
-      ? "https://peaceful-oasis-92942.herokuapp.com"
-      : "http://localhost:4000";
-
-  passport.use(
-    new SpotifyStrategy(
-      {
-        clientID: SPOTIFY_CLIENT_ID,
-        clientSecret: SPOTIFY_CLIENT_SECRET,
-        callbackURL: `${url}/auth/spotify/callback/`,
-      },
-      function (
-        accessToken: any,
-        refreshToken: any,
-        expires_in: any,
-        profile: any,
-        done: any
-      ) {
-        console.log(accessToken, refreshToken, expires_in);
-        // asynchronous verification, for effect...
-        process.nextTick(function () {
-          return done(null, profile);
-        });
-      }
-    )
-  );
+  ////////// FACEBOOK OAUTH ///////////////
+  passport.use("FacebookStrategy", facebookStrategy);
 
   app.use(passport.initialize());
 
-  app.get("/auth/spotify", passport.authenticate("spotify"), function () {
-    // The request will be redirected to spotify for authentication, so this
-    // function will not be called.
-  });
+  app.get("/auth/facebook", passport.authenticate("FacebookStrategy"));
 
   app.get(
-    "/auth/spotify/callback",
-    passport.authenticate("spotify", { session: false }),
-    async (_req, res) => {
-      // give user a session
-      // Successful authentication, redirect home.
+    "/auth/facebook/callback",
+    passport.authenticate("FacebookStrategy", { session: false }),
+    (req, res) => {
+      console.log((req.user as any).id);
+      // (req.session as any).userId = (req.user as any).id;
+      // @todo redirect to frontend
       res.redirect("/");
     }
   );
+
+  ////////// SPOTIFY CLIENT CREDENTIALS AUTH ///////////////
+
+  //Retrieve an access token.
+  const spotifyGrantCredentials = () => {
+    spotifyApi.clientCredentialsGrant().then(
+      function (data) {
+        console.log("NEW SPOTIFY ACCESS TOKEN RECIEVED");
+        // console.log("The access token expires in " + data.body["expires_in"]);
+        // console.log("The access token is " + data.body["access_token"]);
+
+        // Save the access token so that it's used in future calls
+        spotifyApi.setAccessToken(data.body["access_token"]);
+      },
+      function (err) {
+        console.warn("FAILURE TO GET NEW ACCESS TOKEN", err);
+      }
+    );
+  };
+
+  // get a new access token on starting the server
+  spotifyGrantCredentials();
+
+  // get a new access token after half an hour
+  setInterval(spotifyGrantCredentials, 1.8e6);
+
+  ////////// SET UP THE REST OF THE SERVER ///////////////
+
+  // connect to postgresql database, run migrations if needed
+  const conn = await createTypeormConnection();
+  await conn.runMigrations();
+  console.log("ran migrations");
 
   // create schema for Apollo from resolvers
   const schema = await CreateSchema();
@@ -118,16 +130,17 @@ const main = async () => {
   const apolloServer = new ApolloServer({
     schema,
     context: ({ req, res }: any) => ({ req, res }),
+    dataSources: () => ({
+      SpotifyAPI: new SpotifyDataSource(),
+    }),
     introspection: true,
     playground: true,
   });
 
   apolloServer.applyMiddleware({ app, cors: false });
 
-  const port = process.env.PORT || 4000;
-
   app.listen(port, () => {
-    console.log(`server started on  http://localhost:${port}/graphql`);
+    console.log(`server started on ${url}`);
   });
 };
 

@@ -1,7 +1,7 @@
 import { Resolver, Mutation, Ctx } from "type-graphql";
 // logout the user by deleting their session and clearing the cookies
-import { MyContext } from "../../types/MyContext";
-import { sendRefreshToken } from "../../utils-global/sendRefreshToken";
+import { MyContext } from "../../../types/MyContext";
+import { sendRefreshToken } from "../../../global-utils/sendRefreshToken";
 
 @Resolver()
 export class LogoutResolver {
