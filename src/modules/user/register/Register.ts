@@ -8,7 +8,7 @@ import {
   Ctx,
 } from "type-graphql";
 import { isAuth } from "../../../modules/middleware/isAuth";
-import { RegisterInput, FacebookRegisterInput } from "./RegisterInput";
+import { RegisterInput, SSORegisterInput } from "./RegisterInput";
 import { User } from "../../../entity/User";
 import { getRepository } from "typeorm";
 import { sendRefreshToken } from "../../../global-utils/sendRefreshToken";
@@ -54,10 +54,11 @@ export class RegisterResolver {
     return true;
   }
 
-  // TODO: reconcile differences between fb usernae and regular name
+  // TODO: reconcile differences between fb username and regular name
+
   @Mutation(() => LoginResponse)
-  async facebookRegisterAndLogIn(
-    @Arg("data") { id, username, email }: FacebookRegisterInput,
+  async facebookSSO(
+    @Arg("data") { id, username, email }: SSORegisterInput,
     @Ctx() { res }: MyContext
   ): Promise<LoginResponse | null> {
     // see if there is a user w this id is in the db
@@ -82,14 +83,15 @@ export class RegisterResolver {
       }).save();
     } else if (!user.facebookId) {
       // merge account
-      // we found user by email -> never clicked on sign in w FB, but do have account
+      // we found user by email ->
+      // never clicked on sign in w FB, but do have account
       user.facebookId = id;
       await user.save();
     } else {
       // we have a facebookId
-      // login
     }
 
+    // now we for sure have a saved user, log them in
     console.log(user);
 
     sendRefreshToken(res, createRefreshToken(user));
@@ -98,10 +100,52 @@ export class RegisterResolver {
       accessToken: createAccessToken(user),
       user,
     };
+  }
 
-    // TODO: login with the new user
+  // google login
+  @Mutation(() => LoginResponse)
+  async googleSSO(
+    @Arg("data") { id, username, email }: SSORegisterInput,
+    @Ctx() { res }: MyContext
+  ): Promise<LoginResponse | null> {
+    // see if there is a user w this id is in the db
+    const query = getRepository(User)
+      .createQueryBuilder("user")
+      .where("user.googleId = :googleId", { googleId: id });
 
-    // // send email to confirm
-    // await sendEmail(email, await createConfirmationUrl(user.id));
+    // conditionally see if this email exists in the db
+    // if (email) {
+
+    // }
+    query.orWhere("user.email = :email", { email });
+
+    let user = await query.getOne();
+
+    if (!user) {
+      // this user needs to be registered
+      user = await User.create({
+        username,
+        email,
+        googleId: id,
+      }).save();
+    } else if (!user.googleId) {
+      // merge account
+      // we found user by email ->
+      // never clicked on sign in w FB, but do have account
+      user.googleId = id;
+      await user.save();
+    } else {
+      // we have a facebookId
+    }
+
+    // now we for sure have a saved user, log them in
+    console.log(user);
+
+    sendRefreshToken(res, createRefreshToken(user));
+
+    return {
+      accessToken: createAccessToken(user),
+      user,
+    };
   }
 }

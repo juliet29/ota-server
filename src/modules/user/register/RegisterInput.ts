@@ -22,7 +22,7 @@ export class RegisterInput extends PasswordInput {
 }
 
 @InputType()
-export class FacebookRegisterInput {
+export class SSORegisterInput {
   @Field()
   @Length(1, 255)
   id: string;

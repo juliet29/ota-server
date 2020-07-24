@@ -30,6 +30,10 @@ export class User extends BaseEntity {
   @Column("text", { nullable: true })
   facebookId: string | null;
 
+  @Field(() => String)
+  @Column("text", { nullable: true })
+  googleId: string | null;
+
   // TODO: reset default to be false after implement confirm user functionality
   @Column("bool", { default: true })
   confirmed: boolean;
