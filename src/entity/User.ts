@@ -1,12 +1,12 @@
+import { Field, ID, ObjectType } from "type-graphql";
 import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
   BaseEntity,
+  Column,
+  Entity,
   OneToMany,
+  PrimaryGeneratedColumn,
 } from "typeorm";
-import { ObjectType, Field, ID } from "type-graphql";
-import { BasePost } from "./BasePost";
+import { TrackPost } from "./ContentPosts";
 
 @ObjectType()
 @Entity()
@@ -39,6 +39,6 @@ export class User extends BaseEntity {
   confirmed: boolean;
 
   // one user can have many post assigned to them
-  @OneToMany(() => BasePost, (post) => post.user)
-  post: BasePost[];
+  @OneToMany(() => TrackPost, (post) => post.user)
+  post: TrackPost[];
 }

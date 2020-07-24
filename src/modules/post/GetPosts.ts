@@ -1,13 +1,8 @@
-import {
-  Resolver,
-  Query,
-  createUnionType,
-  Arg,
-  // ObjectType,
-  // Field,
-} from "type-graphql";
+import { Arg, createUnionType, Query, Resolver } from "type-graphql";
 // import { isAuth } from "../middleware/isAuth";
-import { ArtistPost, AlbumPost, TrackPost } from "../../entity/ContentPosts";
+import { AlbumPost, ArtistPost, TrackPost } from "../../entity/ContentPosts";
+import { createQueryBuilder } from "typeorm";
+import { User } from "../../entity/User";
 
 const GetPostsResultUnion = createUnionType({
   name: "GetPostsResult",
@@ -35,6 +30,37 @@ export class GetPostsResolver {
     const tracks = await TrackPost.find({ relations: ["user"] });
 
     return [...artists, ...albums, ...tracks];
+  }
+
+  // @UseMiddleware(isAuth)
+  @Query(() => [TrackPost])
+  async getUserPosts(@Arg("id") id: number) {
+    // const userPosts = await TrackPost.find({ where: [{ user : id }] });
+    console.log(id);
+
+    // const userPosts = await createQueryBuilder()
+    //   .relation(TrackPost, "user")
+    //   .of(1) // you can use just post id as well
+    //   .loadMany();
+
+    const userPosts = await createQueryBuilder()
+      .relation(User, "post")
+      .of(id) // you can use just post id as well
+      .loadMany();
+
+    // const userPosts = await createQueryBuilder("track_post")
+    //   .leftJoinAndSelect("track_post.user", "user")
+    //   .where("user.id = :userId", { userId: id })
+    //   .getOne();
+
+    console.log(userPosts);
+
+    // const userPosts2 = await createQueryBuilder("user")
+    // .leftJoinAndSelect("user.photos", "photo")
+    // .where("user.name = :name", { name: "Timber" })
+    // .getOne();
+
+    return userPosts;
   }
 
   @Query(() => [ArtistPost])
