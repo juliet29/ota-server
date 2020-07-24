@@ -21,10 +21,10 @@ const GetPostsResultUnion = createUnionType({
 
 @Resolver()
 export class GetPostsResolver {
-  // return all the Posts in the db
   // @UseMiddleware(isAuth)
   @Query(() => [GetPostsResultUnion])
   async getPosts() {
+    // return all posts in the db
     const artists = await ArtistPost.find({ relations: ["user"] });
     const albums = await AlbumPost.find({ relations: ["user"] });
     const tracks = await TrackPost.find({ relations: ["user"] });
@@ -33,34 +33,26 @@ export class GetPostsResolver {
   }
 
   // @UseMiddleware(isAuth)
-  @Query(() => [TrackPost])
+  @Query(() => [GetPostsResultUnion])
   async getUserPosts(@Arg("id") id: number) {
-    // const userPosts = await TrackPost.find({ where: [{ user : id }] });
-    console.log(id);
+    // get posts by user id
 
-    // const userPosts = await createQueryBuilder()
-    //   .relation(TrackPost, "user")
-    //   .of(1) // you can use just post id as well
-    //   .loadMany();
-
-    const userPosts = await createQueryBuilder()
-      .relation(User, "post")
-      .of(id) // you can use just post id as well
+    const albumPosts = await createQueryBuilder()
+      .relation(User, "albumPost")
+      .of(id)
       .loadMany();
 
-    // const userPosts = await createQueryBuilder("track_post")
-    //   .leftJoinAndSelect("track_post.user", "user")
-    //   .where("user.id = :userId", { userId: id })
-    //   .getOne();
+    const artistPosts = await createQueryBuilder()
+      .relation(User, "artistPost")
+      .of(id)
+      .loadMany();
 
-    console.log(userPosts);
+    const trackPosts = await createQueryBuilder()
+      .relation(User, "trackPost")
+      .of(id)
+      .loadMany();
 
-    // const userPosts2 = await createQueryBuilder("user")
-    // .leftJoinAndSelect("user.photos", "photo")
-    // .where("user.name = :name", { name: "Timber" })
-    // .getOne();
-
-    return userPosts;
+    return [...albumPosts, ...artistPosts, ...trackPosts];
   }
 
   @Query(() => [ArtistPost])

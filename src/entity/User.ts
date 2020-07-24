@@ -6,7 +6,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { TrackPost } from "./ContentPosts";
+import { TrackPost, ArtistPost, AlbumPost } from "./ContentPosts";
 
 @ObjectType()
 @Entity()
@@ -38,7 +38,13 @@ export class User extends BaseEntity {
   @Column("bool", { default: true })
   confirmed: boolean;
 
-  // one user can have many post assigned to them
-  @OneToMany(() => TrackPost, (post) => post.user)
-  post: TrackPost[];
+  // one user can have many posts and types of posts
+  @OneToMany(() => TrackPost, (trackPost) => trackPost.user)
+  trackPost: TrackPost[];
+
+  @OneToMany(() => ArtistPost, (artistPost) => artistPost.user)
+  artistPost: ArtistPost[];
+
+  @OneToMany(() => AlbumPost, (albumPost) => albumPost.user)
+  albumPost: AlbumPost[];
 }
