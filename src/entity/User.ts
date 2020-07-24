@@ -26,6 +26,7 @@ export class User extends BaseEntity {
   @Column("text", { nullable: true })
   password: string;
 
+  @Field(() => String)
   @Column("text", { nullable: true })
   facebookId: string | null;
 
