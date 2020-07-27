@@ -31,5 +31,7 @@ export class BasePost extends BaseEntity {
   @Column()
   imageUrl?: string;
 
-  // @CreateDateColumn is a special column that is automatically set to the entity's insertion date. You don't need to set this column - it will be automatically set.
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  likes?: number;
 }

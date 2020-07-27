@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { TrackPost, ArtistPost, AlbumPost } from "./ContentPosts";
+import { Comment } from "./Comment";
 
 @ObjectType()
 @Entity()
@@ -47,4 +48,7 @@ export class User extends BaseEntity {
 
   @OneToMany(() => AlbumPost, (albumPost) => albumPost.user)
   albumPost: AlbumPost[];
+
+  @OneToMany(() => Comment, (comment) => comment.user)
+  comment: Comment[];
 }
