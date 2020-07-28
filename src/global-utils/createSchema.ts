@@ -18,7 +18,8 @@ import { CreateCommentResolver } from "../modules/comment/CreateComment";
 import { EditCommentResolver } from "../modules/comment/EditComment";
 import { EditPostResolver } from "../modules/post/EditPost";
 import { SearchPostResolver } from "../modules/post/SearchPosts";
-import { OtherUserResolver } from "../modules/user/SearchUser";
+import { OtherUserResolver } from "../modules/user/OtherUser";
+import { UseTopFiveResolver } from "../modules/user/UserTopFive";
 
 export const CreateSchema = () =>
   buildSchema({
@@ -43,6 +44,7 @@ export const CreateSchema = () =>
       EditPostResolver,
       SearchPostResolver,
       OtherUserResolver,
+      UseTopFiveResolver,
     ],
     nullableByDefault: true,
     //TODO remove this

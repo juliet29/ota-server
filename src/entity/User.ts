@@ -1,3 +1,4 @@
+import { TopFive } from "../modules/user/UserTopFive";
 import { Field, ID, ObjectType } from "type-graphql";
 import {
   BaseEntity,
@@ -6,8 +7,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { TrackPost, ArtistPost, AlbumPost } from "./ContentPosts";
 import { Comment } from "./Comment";
+import { AlbumPost, ArtistPost, TrackPost } from "./ContentPosts";
 
 @ObjectType()
 @Entity()
@@ -39,7 +40,14 @@ export class User extends BaseEntity {
   @Column("bool", { default: true })
   confirmed: boolean;
 
-  // one user can have many posts and types of posts
+  @Field(() => Number)
+  @Column("simple-array", { nullable: true })
+  followers: number[];
+
+  @OneToMany(() => Comment, (comment) => comment.user)
+  comment: Comment[];
+
+  // ---- POSTS BY THE USER
   @OneToMany(() => TrackPost, (trackPost) => trackPost.user)
   trackPost: TrackPost[];
 
@@ -49,10 +57,17 @@ export class User extends BaseEntity {
   @OneToMany(() => AlbumPost, (albumPost) => albumPost.user)
   albumPost: AlbumPost[];
 
-  @OneToMany(() => Comment, (comment) => comment.user)
-  comment: Comment[];
+  // ---- TOP FIVE
 
-  @Field(() => Number)
-  @Column("simple-array", { nullable: true })
-  followers: number[];
+  @Field(() => TopFive)
+  @Column("jsonb", { nullable: true })
+  topArtists: TopFive[];
+
+  @Field(() => TopFive)
+  @Column("jsonb", { nullable: true })
+  topAlbums: TopFive[];
+
+  @Field(() => TopFive)
+  @Column("jsonb", { nullable: true })
+  topTracks: TopFive[];
 }
