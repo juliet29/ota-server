@@ -51,4 +51,8 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Comment, (comment) => comment.user)
   comment: Comment[];
+
+  @Field(() => Number)
+  @Column("simple-array", { nullable: true })
+  followers: number[];
 }
