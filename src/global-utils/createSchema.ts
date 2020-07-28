@@ -2,7 +2,6 @@ import { buildSchema } from "type-graphql";
 import { CreateAlbumPostResolver } from "../modules/post/content-posts/CreateAlbumPost";
 import { CreateArtistPostResolver } from "../modules/post/content-posts/CreateArtistPost";
 import { CreateTrackPostResolver } from "../modules/post/content-posts/CreateTrackPost";
-import { CreatePostResolver } from "../modules/post/CreatePost";
 import { GetPostsResolver } from "../modules/post/GetPosts";
 import { GetAlbumTracksResolver } from "../modules/spotify/info/GetAlbumTracks";
 import { GetArtistAlbumsResolver } from "../modules/spotify/info/GetArtistInfo";
@@ -14,6 +13,10 @@ import { GetCurrentUserResolver } from "../modules/user/current-user/GetCurrentU
 import { LoginResolver } from "../modules/user/current-user/Login";
 import { LogoutResolver } from "../modules/user/current-user/Logout";
 import { RegisterResolver } from "../modules/user/register/Register";
+import { GetCommentsResolver } from "../modules/comment/GetComment";
+import { CreateCommentResolver } from "../modules/comment/CreateComment";
+import { EditCommentResolver } from "../modules/comment/EditComment";
+import { EditPostResolver } from "../modules/post/EditPost";
 
 export const CreateSchema = () =>
   buildSchema({
@@ -25,7 +28,6 @@ export const CreateSchema = () =>
       LogoutResolver,
       GetCurrentUserResolver,
       RegisterResolver,
-      CreatePostResolver,
       GetPostsResolver,
       SearchResolver,
       CreateArtistPostResolver,
@@ -33,6 +35,10 @@ export const CreateSchema = () =>
       CreateTrackPostResolver,
       GetArtistAlbumsResolver,
       GetAlbumTracksResolver,
+      GetCommentsResolver,
+      CreateCommentResolver,
+      EditCommentResolver,
+      EditPostResolver,
     ],
     nullableByDefault: true,
     //TODO remove this

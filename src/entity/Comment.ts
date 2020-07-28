@@ -4,11 +4,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  PrimaryGeneratedColumn,
   ManyToOne,
+  PrimaryGeneratedColumn,
 } from "typeorm";
+import { AlbumPost, ArtistPost, TrackPost } from "./ContentPosts";
 import { User } from "./User";
-import { TrackPost, ArtistPost, AlbumPost } from "./ContentPosts";
 
 @ObjectType()
 @Entity()

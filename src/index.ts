@@ -145,7 +145,7 @@ const main = async () => {
   apolloServer.applyMiddleware({ app, cors: false });
 
   app.listen(port, () => {
-    console.log(`server started on ${url}/grqphql`);
+    console.log(`server started on ${url}/graphql`);
   });
 };
 

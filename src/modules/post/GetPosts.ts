@@ -4,7 +4,7 @@ import { AlbumPost, ArtistPost, TrackPost } from "../../entity/ContentPosts";
 import { createQueryBuilder } from "typeorm";
 import { User } from "../../entity/User";
 
-const GetPostsResultUnion = createUnionType({
+export const GetPostsResultUnion = createUnionType({
   name: "GetPostsResult",
   types: () => [AlbumPost, ArtistPost, TrackPost] as const,
   resolveType: (value) => {
