@@ -1,8 +1,8 @@
 import { Arg, Query, Resolver } from "type-graphql";
-import { createQueryBuilder } from "typeorm";
 import { Comment } from "../../entity/Comment";
-import { TrackPost, ArtistPost, AlbumPost } from "../../entity/ContentPosts";
+import { AlbumPost, ArtistPost, TrackPost } from "../../entity/ContentPosts";
 import { CommentInput } from "./CreateComment";
+import { createQueryBuilder } from "typeorm";
 
 @Resolver()
 export class GetCommentsResolver {
@@ -13,24 +13,57 @@ export class GetCommentsResolver {
   ) {
     // get all the comments associated with a single pos
     //TODO: get users too https://typeorm.io/#/relational-query-builder
-    const comments =
+    // const comments =
+    //   postType === "track"
+    //     ? await createQueryBuilder()
+    //         .relation(TrackPost, "comment")
+    //         .of(id)
+    //         .loadMany()
+    //     : postType === "artist"
+    //     ? await createQueryBuilder()
+    //         .relation(ArtistPost, "comment")
+    //         .of(id)
+    //         .loadMany()
+    //     : postType === "album"
+    //     ? await createQueryBuilder()
+    //         .relation(AlbumPost, "comment")
+    //         .of(id)
+    //         .loadMany()
+    //     : null;
+
+    const entity =
       postType === "track"
-        ? await createQueryBuilder()
-            .relation(TrackPost, "comment")
-            .of(id)
-            .loadMany()
+        ? TrackPost
         : postType === "artist"
-        ? await createQueryBuilder()
-            .relation(ArtistPost, "comment")
-            .of(id)
-            .loadMany()
+        ? ArtistPost
         : postType === "album"
-        ? await createQueryBuilder()
-            .relation(AlbumPost, "comment")
-            .of(id)
-            .loadMany()
+        ? AlbumPost
         : null;
 
-    return comments;
+    if (entity) {
+      // get comments on the post
+      const comments: Comment[] = await createQueryBuilder()
+        .relation(entity, "comment")
+        .of(id)
+        .loadMany();
+
+      // get person who made the comment
+      let el;
+      let commentwithUserArray = new Array<Comment>();
+
+      for (el in comments) {
+        const commentwithUser = (
+          await Comment.find({
+            where: { id: comments[el].id },
+            relations: ["user"],
+          })
+        )[0];
+        commentwithUserArray.push(commentwithUser);
+      }
+
+      return commentwithUserArray;
+    }
+
+    return null;
   }
 }
