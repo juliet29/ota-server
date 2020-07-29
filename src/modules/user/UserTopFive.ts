@@ -43,7 +43,7 @@ export class TopFiveInput {
 
 @InputType()
 export class TopFiveArrayInput extends TopFiveInput {
-  @Field(() => TopFiveInput)
+  @Field(() => [TopFiveInput])
   dataArray: TopFiveInput[];
 
   @Field()

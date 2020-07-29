@@ -44,6 +44,20 @@ export class User extends BaseEntity {
   @Column("simple-array", { nullable: true })
   followers: number[];
 
+  // ---- TOP FIVE
+
+  @Field(() => [TopFive])
+  @Column("jsonb", { nullable: true })
+  topArtists: TopFive[];
+
+  @Field(() => [TopFive])
+  @Column("jsonb", { nullable: true })
+  topAlbums: TopFive[];
+
+  @Field(() => [TopFive])
+  @Column("jsonb", { nullable: true })
+  topTracks: TopFive[];
+
   @OneToMany(() => Comment, (comment) => comment.user)
   comment: Comment[];
 
@@ -56,18 +70,4 @@ export class User extends BaseEntity {
 
   @OneToMany(() => AlbumPost, (albumPost) => albumPost.user)
   albumPost: AlbumPost[];
-
-  // ---- TOP FIVE
-
-  @Field(() => TopFive)
-  @Column("jsonb", { nullable: true })
-  topArtists: TopFive[];
-
-  @Field(() => TopFive)
-  @Column("jsonb", { nullable: true })
-  topAlbums: TopFive[];
-
-  @Field(() => TopFive)
-  @Column("jsonb", { nullable: true })
-  topTracks: TopFive[];
 }
