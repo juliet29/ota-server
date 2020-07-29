@@ -60,7 +60,7 @@ export class GetCommentsResolver {
         )[0];
         commentwithUserArray.push(commentwithUser);
       }
-
+      // console.log("hi")
       return commentwithUserArray;
     }
 
