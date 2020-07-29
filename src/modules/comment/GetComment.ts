@@ -12,6 +12,7 @@ export class GetCommentsResolver {
     { id, postType }: CommentInput
   ) {
     // get all the comments associated with a single pos
+    //TODO: get users too https://typeorm.io/#/relational-query-builder
     const comments =
       postType === "track"
         ? await createQueryBuilder()
