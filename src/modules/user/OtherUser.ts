@@ -59,8 +59,10 @@ export class OtherUserResolver {
       .includes(currentUser?.id.toString());
 
     if (!alreadyFollowing && follow) {
+      console.log("TRYING TO FOLLOW", existingFollowers);
+      console.log(`user id: ${id}, time: ${Date()}`);
       try {
-        existingFollowers
+        existingFollowers!?.length > 1
           ? query
               .set({
                 followers: [existingFollowers, currentUser.id],
@@ -79,6 +81,8 @@ export class OtherUserResolver {
 
     // request to unfollow user
     if (!follow) {
+      console.log("TRYING TO UNFOLLOW", existingFollowers);
+      console.log(`user id: ${id}, time: ${Date()}`);
       const unfollowed = existingFollowers?.filter(
         (el) => el != currentUser.id
       );
