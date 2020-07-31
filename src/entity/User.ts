@@ -21,6 +21,10 @@ export class User extends BaseEntity {
   @Column()
   username: string;
 
+  @Field()
+  @Column("text", { nullable: true })
+  profilePicture: string;
+
   @Field(() => String)
   @Column("text", { unique: true, nullable: true })
   email: string | null;

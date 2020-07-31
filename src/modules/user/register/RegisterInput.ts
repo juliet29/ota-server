@@ -34,4 +34,7 @@ export class SSORegisterInput {
   @Field()
   @IsEmail()
   email: string;
+
+  @Field()
+  profilePicture: string;
 }

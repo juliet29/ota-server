@@ -105,7 +105,7 @@ export class RegisterResolver {
   // google login
   @Mutation(() => LoginResponse)
   async googleSSO(
-    @Arg("data") { id, username, email }: SSORegisterInput,
+    @Arg("data") { id, username, email, profilePicture }: SSORegisterInput,
     @Ctx() { res }: MyContext
   ): Promise<LoginResponse | null> {
     // see if there is a user w this id is in the db
@@ -126,6 +126,7 @@ export class RegisterResolver {
       user = await User.create({
         username,
         email,
+        profilePicture,
         googleId: id,
       }).save();
     } else if (!user.googleId) {
