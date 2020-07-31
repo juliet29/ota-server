@@ -58,7 +58,7 @@ export class RegisterResolver {
 
   @Mutation(() => LoginResponse)
   async facebookSSO(
-    @Arg("data") { id, username, email }: SSORegisterInput,
+    @Arg("data") { id, username, email, profilePicture }: SSORegisterInput,
     @Ctx() { res }: MyContext
   ): Promise<LoginResponse | null> {
     // see if there is a user w this id is in the db
@@ -80,6 +80,7 @@ export class RegisterResolver {
         username,
         email,
         facebookId: id,
+        profilePicture,
       }).save();
     } else if (!user.facebookId) {
       // merge account
