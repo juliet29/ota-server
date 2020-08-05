@@ -140,6 +140,9 @@ export class OtherUserResolver {
         // execute querries
         query.execute();
         queryCurrentUser.execute();
+
+        // return update info other user
+        return await User.findOne(id);
       } catch (err) {
         throw new Error(err);
       }
@@ -158,23 +161,20 @@ export class OtherUserResolver {
       const unfollowed = existingFollowers?.filter(
         (el) => el != currentUser.id
       );
-      try {
-        query.set({ followers: [unfollowed] }).execute();
-      } catch (err) {
-        throw new Error(err);
-      }
-
-      // update current users following
       const unfollowing = currentUser.following?.filter((el) => el != id);
       try {
-        query.set({ following: [unfollowing] }).execute();
+        // set and execute
+        query.set({ followers: [unfollowed] }).execute();
+        // return updated user info
+        queryCurrentUser.set({ following: [unfollowing] }).execute();
+        return await User.findOne(id);
       } catch (err) {
         throw new Error(err);
       }
     }
 
-    // return update info other user
-    return await User.findOne(id);
+    // if we get here there is an issue..
+    return null;
   }
 
   //end of resolver
