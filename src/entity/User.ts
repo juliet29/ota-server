@@ -48,6 +48,10 @@ export class User extends BaseEntity {
   @Column("simple-array", { nullable: true })
   followers: number[];
 
+  @Field(() => Number)
+  @Column("simple-array", { nullable: true })
+  following: number[];
+
   // ---- TOP FIVE
 
   @Field(() => [TopFive])
