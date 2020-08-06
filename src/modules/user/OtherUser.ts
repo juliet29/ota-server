@@ -107,7 +107,9 @@ export class OtherUserResolver {
     // sanity checks
     attempt++;
     console.log("\n");
-    console.log(`who is the current user? ${currentUser.id}`);
+    console.log(
+      `who is the current user? ${currentUser.id} who are they trying to follow ${id}`
+    );
     console.log(
       `attempt #${attempt}: alreadyFollowing is ${alreadyFollowing}, and current user wants to follow is ${follow}`
     );
@@ -173,7 +175,10 @@ export class OtherUserResolver {
       }
     }
 
-    // if we get here there is an issue..
+    // if we get here there is an issue or want to re-follow
+
+    console.log(`this is probs a refollow`);
+    console.log("\n");
     return null;
   }
 

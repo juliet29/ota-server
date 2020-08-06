@@ -45,11 +45,11 @@ export class User extends BaseEntity {
   confirmed: boolean;
 
   @Field(() => Number)
-  @Column("simple-array", { nullable: true })
+  @Column("simple-array", { nullable: true, default: 0 })
   followers: number[];
 
   @Field(() => Number)
-  @Column("simple-array", { nullable: true })
+  @Column("simple-array", { nullable: true, default: 0 })
   following: number[];
 
   // ---- TOP FIVE
