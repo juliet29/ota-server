@@ -140,14 +140,21 @@ export class OtherUserResolver {
         }
 
         // execute querries
-        query.execute();
-        queryCurrentUser.execute();
+        await query.execute();
+        await queryCurrentUser.execute();
 
         // return update info other user
         return await User.findOne(id);
       } catch (err) {
         throw new Error(err);
       }
+    }
+
+    // already following and want to follow
+    if (alreadyFollowing && follow) {
+      // just retrun the user w no changes
+      console.log("this is a refollow! \n");
+      return await User.findOne(id);
     }
 
     // request to unfollow user
@@ -166,9 +173,9 @@ export class OtherUserResolver {
       const unfollowing = currentUser.following?.filter((el) => el != id);
       try {
         // set and execute
-        query.set({ followers: [unfollowed] }).execute();
+        await query.set({ followers: [unfollowed] }).execute();
         // return updated user info
-        queryCurrentUser.set({ following: [unfollowing] }).execute();
+        await queryCurrentUser.set({ following: [unfollowing] }).execute();
         return await User.findOne(id);
       } catch (err) {
         throw new Error(err);
@@ -177,7 +184,7 @@ export class OtherUserResolver {
 
     // if we get here there is an issue or want to re-follow
 
-    console.log(`this is probs a refollow`);
+    console.log(`this is probs an error`);
     console.log("\n");
     return null;
   }
