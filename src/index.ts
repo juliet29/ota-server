@@ -13,6 +13,7 @@ import { createTypeormConnection } from "./global-utils/createTypeormConn";
 import {
   SPOTIFY_CLIENT_ID,
   SPOTIFY_CLIENT_SECRET,
+  REFRESH_TOKEN_SECRET,
 } from "./global-utils/secrets";
 import { sendRefreshToken } from "./global-utils/sendRefreshToken";
 import { facebookStrategy } from "./global-utils/facebookPassport";
@@ -57,12 +58,25 @@ const main = async () => {
   ////////// REFRESH TOKEN FOR USER AUTH ///////////////
   app.post("/refresh_token", async (req, res) => {
     const token = req.cookies.jid;
+    console.log("\n");
+    // console.log(
+    //   `THIS REQUEST: ${token} THIS REQUEST2: ${req.cookies}
+    //  `
+    // );
+    if (req) {
+      console.log("token", token);
+      console.log("\n");
+      console.log("cookies", req.cookies);
+    }
+
+    console.log("\n");
+
     if (!token) {
       return res.send({ ok: false, accessToken: "" });
     }
     let payload: any = null;
     try {
-      payload = verify(token, "REFRESH_TOKEN_SEC");
+      payload = verify(token, REFRESH_TOKEN_SECRET);
     } catch (err) {
       console.log(err);
       return res.send({ ok: false, accessToken: "" });

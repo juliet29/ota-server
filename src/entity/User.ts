@@ -44,11 +44,11 @@ export class User extends BaseEntity {
   @Column("bool", { default: true })
   confirmed: boolean;
 
-  @Field(() => Number)
+  @Field(() => [Number])
   @Column("simple-array", { nullable: true, default: 0 })
   followers: number[];
 
-  @Field(() => Number)
+  @Field(() => [Number])
   @Column("simple-array", { nullable: true, default: 0 })
   following: number[];
 

@@ -37,6 +37,7 @@ export class LoginResolver {
     }
 
     if (!user.facebookId) {
+      //
       // // if we find the user, compare the passwords entered
       const valid = await bcrypt.compare(password, user.password);
       // console.log(password);
