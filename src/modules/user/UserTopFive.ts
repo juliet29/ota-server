@@ -39,10 +39,13 @@ export class TopFiveInput {
 
   @Field()
   imageUrl: string;
+
+  @Field(() => [String])
+  artistNames?: string[];
 }
 
 @InputType()
-export class TopFiveArrayInput extends TopFiveInput {
+export class TopFiveArrayInput {
   @Field(() => [TopFiveInput])
   dataArray: TopFiveInput[];
 
@@ -64,20 +67,23 @@ export class UseTopFiveResolver {
     }
     console.log(dataArray);
     // json = dataArray
-
-    type === "track"
-      ? User.update(currentUser.id, {
-          topTracks: dataArray,
-        })
-      : type === "artist"
-      ? User.update(currentUser.id, {
-          topArtists: dataArray,
-        })
-      : type === "album"
-      ? User.update(currentUser.id, {
-          topAlbums: dataArray,
-        })
-      : null;
+    try {
+      type === "track"
+        ? User.update(currentUser.id, {
+            topTracks: dataArray,
+          })
+        : type === "artist"
+        ? User.update(currentUser.id, {
+            topArtists: dataArray,
+          })
+        : type === "album"
+        ? User.update(currentUser.id, {
+            topAlbums: dataArray,
+          })
+        : null;
+    } catch (err) {
+      console.log("err in user top five server", err);
+    }
 
     return await User.findOne(ctx.payload?.userId);
   }
