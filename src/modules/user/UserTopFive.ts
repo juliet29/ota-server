@@ -65,7 +65,7 @@ export class UseTopFiveResolver {
     if (!currentUser) {
       throw new AuthenticationError("User not found");
     }
-    console.log(dataArray);
+    console.log("dataArray in user5", dataArray);
     // json = dataArray
     try {
       type === "track"
