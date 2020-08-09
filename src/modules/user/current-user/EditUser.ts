@@ -20,8 +20,8 @@ export class EditUserInput {
   @Field()
   username: string;
 
-  @Field()
-  genres?: string;
+  @Field(() => [String])
+  genres?: string[];
 }
 
 @Resolver()
@@ -29,7 +29,7 @@ export class EditUserResolver {
   // update current user's name and/or username
   @UseMiddleware(isAuth)
   @Mutation(() => Boolean)
-  async EditUserNames(
+  async editUserNames(
     @Arg("data") { name, username }: EditUserInput,
     @Ctx() ctx: MyContext
   ) {
@@ -43,6 +43,29 @@ export class EditUserResolver {
       await User.update(user.id, {
         name,
         username,
+      });
+    } catch (err) {
+      throw new Error(`user not updated" ${err}`);
+    }
+
+    return true;
+  }
+
+  @UseMiddleware(isAuth)
+  @Mutation(() => Boolean)
+  async editUserGenres(
+    @Arg("data") { genres }: EditUserInput,
+    @Ctx() ctx: MyContext
+  ) {
+    const user = await User.findOne(ctx.payload?.userId)!;
+
+    if (!user) {
+      throw new AuthenticationError("User not found");
+    }
+
+    try {
+      await User.update(user.id, {
+        genres,
       });
     } catch (err) {
       throw new Error(`user not updated" ${err}`);

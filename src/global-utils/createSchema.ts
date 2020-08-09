@@ -22,6 +22,7 @@ import { OtherUserResolver } from "../modules/user/OtherUser";
 import { UseTopFiveResolver } from "../modules/user/UserTopFive";
 import { UploadImageResolver } from "../modules/user/UploadImage";
 import { EditUserResolver } from "../modules/user/current-user/EditUser";
+import { GenresResolver } from "../modules/spotify/info/GetGenres";
 
 export const CreateSchema = () =>
   buildSchema({
@@ -49,6 +50,7 @@ export const CreateSchema = () =>
       UseTopFiveResolver,
       UploadImageResolver,
       EditUserResolver,
+      GenresResolver,
     ],
     nullableByDefault: true,
     //TODO remove this
