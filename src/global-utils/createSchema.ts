@@ -21,6 +21,7 @@ import { SearchPostResolver } from "../modules/post/SearchPosts";
 import { OtherUserResolver } from "../modules/user/OtherUser";
 import { UseTopFiveResolver } from "../modules/user/UserTopFive";
 import { UploadImageResolver } from "../modules/user/UploadImage";
+import { EditUserResolver } from "../modules/user/current-user/EditUser";
 
 export const CreateSchema = () =>
   buildSchema({
@@ -47,6 +48,7 @@ export const CreateSchema = () =>
       OtherUserResolver,
       UseTopFiveResolver,
       UploadImageResolver,
+      EditUserResolver,
     ],
     nullableByDefault: true,
     //TODO remove this

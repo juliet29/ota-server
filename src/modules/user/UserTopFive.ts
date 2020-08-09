@@ -69,15 +69,15 @@ export class UseTopFiveResolver {
     // json = dataArray
     try {
       type === "track"
-        ? User.update(currentUser.id, {
+        ? await User.update(currentUser.id, {
             topTracks: dataArray,
           })
         : type === "artist"
-        ? User.update(currentUser.id, {
+        ? await User.update(currentUser.id, {
             topArtists: dataArray,
           })
         : type === "album"
-        ? User.update(currentUser.id, {
+        ? await User.update(currentUser.id, {
             topAlbums: dataArray,
           })
         : null;

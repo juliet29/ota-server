@@ -9,6 +9,12 @@ import { ACCESS_TOKEN_SECRET } from "../../../global-utils/secrets";
 export class GetCurrentUserResolver {
   @Query(() => User, { nullable: true })
   async getCurrentUser(@Ctx() ctx: MyContext): Promise<User | undefined> {
+    // TODO make this more efficient
+    // const user = await User.findOne(ctx.payload?.userId)!;
+
+    // if (!user) {
+    //   throw new AuthenticationError("User not found");
+    // }
     const authorization = ctx.req.headers["authorization"];
 
     if (!authorization) {

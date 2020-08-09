@@ -23,6 +23,10 @@ export class User extends BaseEntity {
 
   @Field()
   @Column("text", { nullable: true })
+  name: string;
+
+  @Field()
+  @Column("text", { nullable: true })
   profilePicture: string;
 
   @Field(() => String)
@@ -43,6 +47,14 @@ export class User extends BaseEntity {
   // TODO: reset default to be false after implement confirm user functionality
   @Column("bool", { default: true })
   confirmed: boolean;
+
+  @Field(() => Boolean)
+  @Column("bool", { default: true })
+  firstLogin: boolean;
+
+  @Field(() => [String])
+  @Column("simple-array", { nullable: true, default: "" })
+  genres: string[];
 
   @Field(() => [Number])
   @Column("simple-array", { nullable: true, default: 0 })

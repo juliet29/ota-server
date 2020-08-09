@@ -42,12 +42,12 @@ export class RegisterResolver {
 
     // save the user into the database
     // const user =
-    const followers = Array<number>();
-    const following = Array<number>();
+    // const followers = Array<number>();
+    // const following = Array<number>();
     await User.create({
       username,
-      followers,
-      following,
+      // followers,
+      // following,
       email,
       password: hashedPassowrd,
     }).save();
@@ -80,12 +80,12 @@ export class RegisterResolver {
 
     if (!user) {
       // this user needs to be registered
-      const followers = Array<number>();
-      const following = Array<number>();
+      // const followers = Array<number>();
+      // const following = Array<number>();
       user = await User.create({
         username,
-        followers,
-        following,
+        // followers,
+        // following,
         email,
         facebookId: id,
         profilePicture,
@@ -132,13 +132,13 @@ export class RegisterResolver {
 
     if (!user) {
       // this user needs to be registered
-      const followers = Array<number>();
-      const following = Array<number>();
+      // const followers = Array<number>();
+      // const following = Array<number>();
       user = await User.create({
         username,
         email,
-        followers,
-        following,
+        // followers,
+        // following,
         profilePicture,
         googleId: id,
       }).save();
