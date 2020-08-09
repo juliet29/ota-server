@@ -74,6 +74,26 @@ export class EditUserResolver {
     return true;
   }
 
+  @UseMiddleware(isAuth)
+  @Mutation(() => Boolean)
+  async editFirstLogin(@Ctx() ctx: MyContext) {
+    const user = await User.findOne(ctx.payload?.userId)!;
+
+    if (!user) {
+      throw new AuthenticationError("User not found");
+    }
+
+    try {
+      await User.update(user.id, {
+        firstLogin: false,
+      });
+    } catch (err) {
+      throw new Error(`user not updated" ${err}`);
+    }
+
+    return true;
+  }
+
   // -------------
   // end of resolver
 }
