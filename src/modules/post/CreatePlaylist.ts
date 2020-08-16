@@ -1,5 +1,4 @@
 import { AuthenticationError } from "apollo-server-express";
-import { Playlist, PlaylistTrack } from "../../entity/Playlist";
 import {
   Arg,
   Ctx,
@@ -9,7 +8,7 @@ import {
   Resolver,
   UseMiddleware,
 } from "type-graphql";
-import { Poll } from "../../entity/Poll";
+import { Playlist } from "../../entity/Playlist";
 import { User } from "../../entity/User";
 import { MyContext } from "../../types/MyContext";
 import { isAuth } from "../middleware/isAuth";
@@ -25,15 +24,29 @@ import { isAuth } from "../middleware/isAuth";
 // }
 
 @InputType()
+export class PlaylistTrackInput {
+  @Field()
+  trackImageUrl?: string;
+  @Field()
+  name?: string;
+  @Field()
+  id?: string;
+  @Field(() => [String])
+  artists?: string[];
+  @Field()
+  externalUrl?: string;
+}
+
+@InputType()
 export class PlaylistInput {
-  @Field(() => [PlaylistTrack])
-  tracks: PlaylistTrack[];
+  @Field(() => [PlaylistTrackInput])
+  tracks: PlaylistTrackInput[];
 }
 
 @Resolver()
 export class CreatePlaylistResolver {
   @UseMiddleware(isAuth)
-  @Mutation(() => Poll)
+  @Mutation(() => Playlist)
   async createPlaylist(
     @Arg("data")
     { tracks }: PlaylistInput,

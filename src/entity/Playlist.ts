@@ -1,4 +1,4 @@
-import { Field, ID, InputType, ObjectType } from "type-graphql";
+import { Field, ID, ObjectType } from "type-graphql";
 import {
   BaseEntity,
   Column,
@@ -8,15 +8,21 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Track } from "../modules/spotify/search/SearchTypes";
 import { Comment } from "./Comment";
 import { User } from "./User";
 
 @ObjectType()
-@InputType("TrackInput")
-export class PlaylistTrack extends Track {
+export class PlaylistTrack extends BaseEntity {
   @Field()
-  trackImageUrl: string;
+  trackImageUrl?: string;
+  @Field()
+  name?: string;
+  @Field()
+  id?: string;
+  @Field(() => [String])
+  artists?: string[];
+  @Field()
+  externalUrl?: string;
 }
 
 @ObjectType()

@@ -8,7 +8,7 @@ import { Playlist } from "../../entity/Playlist";
 
 export const GetPostsResultUnion = createUnionType({
   name: "GetPostsResult",
-  types: () => [AlbumPost, ArtistPost, TrackPost, Poll] as const,
+  types: () => [AlbumPost, ArtistPost, TrackPost, Poll, Playlist] as const,
   resolveType: (value) => {
     if ("albumId" in value) {
       return AlbumPost;
@@ -71,6 +71,8 @@ export class GetPostsResolver {
       .relation(User, "playlist")
       .of(id)
       .loadMany();
+
+    console.log("playlists", playlists);
 
     return [
       ...albumPosts,

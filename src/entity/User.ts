@@ -96,6 +96,6 @@ export class User extends BaseEntity {
   @OneToMany(() => Poll, (poll) => poll.user)
   poll: Poll[];
 
-  @OneToMany(() => Poll, (playlist) => playlist.user)
+  @OneToMany(() => Playlist, (playlist) => playlist.user)
   playlist: Playlist[];
 }
