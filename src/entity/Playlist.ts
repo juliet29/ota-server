@@ -41,13 +41,21 @@ export class Playlist extends BaseEntity {
   tracks: PlaylistTrack[];
 
   @Field()
+  @Column("text", { nullable: true })
+  title?: string;
+
+  @Field()
+  @Column("text", { nullable: true })
+  description?: string;
+
+  @Field()
   @CreateDateColumn()
   timeSubmitted: Date;
 
   @OneToMany(() => Comment, (comment) => comment.poll)
   comment: Comment[];
 
-  @Field({ nullable: true })
+  @Field()
   @Column({ nullable: true })
   likes?: number;
 

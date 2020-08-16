@@ -41,6 +41,12 @@ export class PlaylistTrackInput {
 export class PlaylistInput {
   @Field(() => [PlaylistTrackInput])
   tracks: PlaylistTrackInput[];
+
+  @Field()
+  title?: string;
+
+  @Field()
+  description?: string;
 }
 
 @Resolver()
@@ -49,7 +55,7 @@ export class CreatePlaylistResolver {
   @Mutation(() => Playlist)
   async createPlaylist(
     @Arg("data")
-    { tracks }: PlaylistInput,
+    { tracks, title, description }: PlaylistInput,
     @Ctx() ctx: MyContext
   ) {
     // get the user from the context
@@ -66,6 +72,8 @@ export class CreatePlaylistResolver {
       newPlaylist = await Playlist.create({
         tracks,
         playlistPicture,
+        title,
+        description,
         likes,
         user,
       }).save();
