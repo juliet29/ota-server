@@ -26,13 +26,16 @@ import { isAuth } from "../middleware/isAuth";
 @InputType()
 export class PollInput {
   @Field()
-  question: string;
+  question?: string;
 
   @Field()
-  length: number;
+  length?: number;
 
   @Field(() => [PollOption])
-  options: PollOption[];
+  options?: PollOption[];
+
+  @Field()
+  id?: number;
 }
 
 @Resolver()
@@ -49,7 +52,6 @@ export class CreatePollResolver {
     if (!user) {
       throw new AuthenticationError("User not found");
     }
-    console.log(ctx);
 
     let newPoll: Poll;
     const likes = 0;
@@ -66,5 +68,28 @@ export class CreatePollResolver {
     }
 
     return newPoll;
+  }
+
+  @UseMiddleware(isAuth)
+  @Mutation(() => Poll)
+  async updatePoll(
+    @Arg("data")
+    { id, options }: PollInput,
+    @Ctx() ctx: MyContext
+  ) {
+    const user = await User.findOne(ctx.payload?.userId)!;
+    if (!user) {
+      throw new AuthenticationError("User not found");
+    }
+
+    // need to pass in a whole new options array, and that will be overwritten in the db
+    if (id) {
+      await Poll.update(id, {
+        options,
+      });
+      return await Poll.findOne(id);
+    }
+    // Poll not found bc id not provided
+    return null;
   }
 }

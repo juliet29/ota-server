@@ -13,6 +13,7 @@ import {
 import { Comment } from "../../entity/Comment";
 import { MyContext } from "../../types/MyContext";
 import { isAuth } from "../middleware/isAuth";
+import { Poll } from "../../entity/Poll";
 
 @InputType()
 export class CommentInput {
@@ -42,7 +43,7 @@ export class CreateCommentResolver {
       throw new AuthenticationError("User not found");
     }
 
-    let trackPost, artistPost, albumPost;
+    let trackPost, artistPost, albumPost, poll;
 
     switch (postType) {
       case "track": {
@@ -55,6 +56,10 @@ export class CreateCommentResolver {
       }
       case "album": {
         albumPost = await AlbumPost.findOne(id);
+        break;
+      }
+      case "poll": {
+        poll = await Poll.findOne(id);
         break;
       }
       default: {
@@ -73,6 +78,7 @@ export class CreateCommentResolver {
         trackPost,
         albumPost,
         artistPost,
+        poll,
       }).save();
     } catch (err) {
       throw new Error(err);

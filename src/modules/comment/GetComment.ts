@@ -3,6 +3,7 @@ import { Comment } from "../../entity/Comment";
 import { AlbumPost, ArtistPost, TrackPost } from "../../entity/ContentPosts";
 import { CommentInput } from "./CreateComment";
 import { createQueryBuilder } from "typeorm";
+import { Poll } from "../../entity/Poll";
 
 @Resolver()
 export class GetCommentsResolver {
@@ -38,6 +39,8 @@ export class GetCommentsResolver {
         ? ArtistPost
         : postType === "album"
         ? AlbumPost
+        : postType === "poll"
+        ? Poll
         : null;
 
     if (entity) {
