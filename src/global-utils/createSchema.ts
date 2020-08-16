@@ -23,6 +23,7 @@ import { UseTopFiveResolver } from "../modules/user/UserTopFive";
 import { UploadImageResolver } from "../modules/user/UploadImage";
 import { EditUserResolver } from "../modules/user/current-user/EditUser";
 import { GenresResolver } from "../modules/spotify/info/GetGenres";
+import { CreatePollResolver } from "../modules/post/CreatePoll";
 
 export const CreateSchema = () =>
   buildSchema({
@@ -51,6 +52,7 @@ export const CreateSchema = () =>
       UploadImageResolver,
       EditUserResolver,
       GenresResolver,
+      CreatePollResolver,
     ],
     nullableByDefault: true,
     //TODO remove this

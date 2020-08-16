@@ -1,4 +1,5 @@
 import { Field, ObjectType } from "type-graphql";
+import { BaseEntity } from "typeorm";
 
 @ObjectType()
 export class ExternalUrl {
@@ -19,7 +20,7 @@ export class Image {
 }
 
 @ObjectType()
-export class BaseSearchResponse {
+export class BaseSearchResponse extends BaseEntity {
   @Field()
   id: string;
 

@@ -10,6 +10,7 @@ import { createQueryBuilder } from "typeorm";
 import { isAuth } from "../middleware/isAuth";
 import { TrackPost, AlbumPost, ArtistPost } from "../../entity/ContentPosts";
 import { GetPostsResultUnion } from "./GetPosts";
+import { Poll } from "../../entity/Poll";
 
 @InputType()
 export class LikeInput {
@@ -38,6 +39,8 @@ export class EditPostResolver {
         ? AlbumPost
         : postType === "artist"
         ? ArtistPost
+        : postType === "poll"
+        ? Poll
         : null;
 
     if (!entity) {

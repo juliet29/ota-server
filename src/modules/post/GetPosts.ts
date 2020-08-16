@@ -3,10 +3,11 @@ import { Arg, createUnionType, Query, Resolver } from "type-graphql";
 import { AlbumPost, ArtistPost, TrackPost } from "../../entity/ContentPosts";
 import { createQueryBuilder } from "typeorm";
 import { User } from "../../entity/User";
+import { Poll } from "../../entity/Poll";
 
 export const GetPostsResultUnion = createUnionType({
   name: "GetPostsResult",
-  types: () => [AlbumPost, ArtistPost, TrackPost] as const,
+  types: () => [AlbumPost, ArtistPost, TrackPost, Poll] as const,
   resolveType: (value) => {
     if ("albumId" in value) {
       return AlbumPost;
@@ -14,8 +15,11 @@ export const GetPostsResultUnion = createUnionType({
     if ("trackId" in value) {
       return TrackPost;
     }
+    if ("artistId" in value) {
+      return ArtistPost;
+    }
 
-    return ArtistPost;
+    return Poll;
   },
 });
 
@@ -28,8 +32,9 @@ export class GetPostsResolver {
     const artists = await ArtistPost.find({ relations: ["user"] });
     const albums = await AlbumPost.find({ relations: ["user"] });
     const tracks = await TrackPost.find({ relations: ["user"] });
+    const polls = await Poll.find({ relations: ["user"] });
 
-    return [...artists, ...albums, ...tracks];
+    return [...artists, ...albums, ...tracks, ...polls];
   }
 
   // @UseMiddleware(isAuth)
@@ -52,7 +57,12 @@ export class GetPostsResolver {
       .of(id)
       .loadMany();
 
-    return [...albumPosts, ...artistPosts, ...trackPosts];
+    const polls = await createQueryBuilder()
+      .relation(User, "poll")
+      .of(id)
+      .loadMany();
+
+    return [...albumPosts, ...artistPosts, ...trackPosts, ...polls];
   }
 
   @Query(() => [ArtistPost])

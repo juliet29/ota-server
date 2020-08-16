@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 import { AlbumPost, ArtistPost, TrackPost } from "./ContentPosts";
 import { User } from "./User";
+import { Poll } from "./Poll";
 
 @ObjectType()
 @Entity()
@@ -44,4 +45,8 @@ export class Comment extends BaseEntity {
   @ManyToOne(() => AlbumPost, (albumPost) => albumPost.comment)
   @Field(() => AlbumPost)
   albumPost: AlbumPost;
+
+  @ManyToOne(() => Poll, (poll) => poll.comment)
+  @Field(() => AlbumPost)
+  poll: AlbumPost;
 }

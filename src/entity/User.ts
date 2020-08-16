@@ -9,6 +9,8 @@ import {
 } from "typeorm";
 import { Comment } from "./Comment";
 import { AlbumPost, ArtistPost, TrackPost } from "./ContentPosts";
+import { Poll } from "./Poll";
+import { Playlist } from "./Playlist";
 
 @ObjectType()
 @Entity()
@@ -90,4 +92,10 @@ export class User extends BaseEntity {
 
   @OneToMany(() => AlbumPost, (albumPost) => albumPost.user)
   albumPost: AlbumPost[];
+
+  @OneToMany(() => Poll, (poll) => poll.user)
+  poll: Poll[];
+
+  @OneToMany(() => Poll, (playlist) => playlist.user)
+  playlist: Playlist[];
 }
