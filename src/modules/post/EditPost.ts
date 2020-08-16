@@ -11,6 +11,7 @@ import { isAuth } from "../middleware/isAuth";
 import { TrackPost, AlbumPost, ArtistPost } from "../../entity/ContentPosts";
 import { GetPostsResultUnion } from "./GetPosts";
 import { Poll } from "../../entity/Poll";
+import { Playlist } from "../../entity/Playlist";
 
 @InputType()
 export class LikeInput {
@@ -41,6 +42,8 @@ export class EditPostResolver {
         ? ArtistPost
         : postType === "poll"
         ? Poll
+        : postType === "playlist"
+        ? Playlist
         : null;
 
     if (!entity) {

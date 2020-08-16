@@ -14,6 +14,7 @@ import { Comment } from "../../entity/Comment";
 import { MyContext } from "../../types/MyContext";
 import { isAuth } from "../middleware/isAuth";
 import { Poll } from "../../entity/Poll";
+import { Playlist } from "../../entity/Playlist";
 
 @InputType()
 export class CommentInput {
@@ -60,6 +61,10 @@ export class CreateCommentResolver {
       }
       case "poll": {
         poll = await Poll.findOne(id);
+        break;
+      }
+      case "playlist": {
+        poll = await Playlist.findOne(id);
         break;
       }
       default: {

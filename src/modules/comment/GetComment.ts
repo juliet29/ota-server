@@ -4,6 +4,7 @@ import { AlbumPost, ArtistPost, TrackPost } from "../../entity/ContentPosts";
 import { CommentInput } from "./CreateComment";
 import { createQueryBuilder } from "typeorm";
 import { Poll } from "../../entity/Poll";
+import { Playlist } from "../../entity/Playlist";
 
 @Resolver()
 export class GetCommentsResolver {
@@ -41,6 +42,8 @@ export class GetCommentsResolver {
         ? AlbumPost
         : postType === "poll"
         ? Poll
+        : postType === "playlist"
+        ? Playlist
         : null;
 
     if (entity) {

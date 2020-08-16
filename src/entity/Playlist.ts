@@ -1,16 +1,23 @@
-import { Field, ID, ObjectType } from "type-graphql";
+import { Field, ID, InputType, ObjectType } from "type-graphql";
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  ManyToOne,
 } from "typeorm";
+import { Track } from "../modules/spotify/search/SearchTypes";
 import { Comment } from "./Comment";
 import { User } from "./User";
-import { Track } from "../modules/spotify/search/SearchTypes";
+
+@ObjectType()
+@InputType("TrackInput")
+export class PlaylistTrack extends Track {
+  @Field()
+  trackImageUrl: string;
+}
 
 @ObjectType()
 @Entity()
@@ -21,11 +28,11 @@ export class Playlist extends BaseEntity {
 
   @Field()
   @Column("text", { nullable: true })
-  picture: string;
+  playlistPicture: string;
 
-  @Field(() => [Track])
+  @Field(() => [PlaylistTrack])
   @Column("jsonb", { nullable: true })
-  tracks: Track[];
+  tracks: PlaylistTrack[];
 
   @Field()
   @CreateDateColumn()

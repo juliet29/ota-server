@@ -4,6 +4,7 @@ import { AlbumPost, ArtistPost, TrackPost } from "../../entity/ContentPosts";
 import { createQueryBuilder } from "typeorm";
 import { User } from "../../entity/User";
 import { Poll } from "../../entity/Poll";
+import { Playlist } from "../../entity/Playlist";
 
 export const GetPostsResultUnion = createUnionType({
   name: "GetPostsResult",
@@ -17,6 +18,9 @@ export const GetPostsResultUnion = createUnionType({
     }
     if ("artistId" in value) {
       return ArtistPost;
+    }
+    if ("playlistPicture" in value) {
+      return Playlist;
     }
 
     return Poll;
@@ -33,8 +37,9 @@ export class GetPostsResolver {
     const albums = await AlbumPost.find({ relations: ["user"] });
     const tracks = await TrackPost.find({ relations: ["user"] });
     const polls = await Poll.find({ relations: ["user"] });
+    const playlists = await Playlist.find({ relations: ["user"] });
 
-    return [...artists, ...albums, ...tracks, ...polls];
+    return [...artists, ...albums, ...tracks, ...polls, ...playlists];
   }
 
   // @UseMiddleware(isAuth)
@@ -62,7 +67,18 @@ export class GetPostsResolver {
       .of(id)
       .loadMany();
 
-    return [...albumPosts, ...artistPosts, ...trackPosts, ...polls];
+    const playlists = await createQueryBuilder()
+      .relation(User, "playlist")
+      .of(id)
+      .loadMany();
+
+    return [
+      ...albumPosts,
+      ...artistPosts,
+      ...trackPosts,
+      ...polls,
+      ...playlists,
+    ];
   }
 
   @Query(() => [ArtistPost])

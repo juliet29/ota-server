@@ -24,6 +24,7 @@ import { UploadImageResolver } from "../modules/user/UploadImage";
 import { EditUserResolver } from "../modules/user/current-user/EditUser";
 import { GenresResolver } from "../modules/spotify/info/GetGenres";
 import { CreatePollResolver } from "../modules/post/CreatePoll";
+import { CreatePlaylistResolver } from "../modules/post/CreatePlaylist";
 
 export const CreateSchema = () =>
   buildSchema({
@@ -53,6 +54,7 @@ export const CreateSchema = () =>
       EditUserResolver,
       GenresResolver,
       CreatePollResolver,
+      CreatePlaylistResolver,
     ],
     nullableByDefault: true,
     //TODO remove this
