@@ -11,6 +11,7 @@ import { Comment } from "./Comment";
 import { AlbumPost, ArtistPost, TrackPost } from "./ContentPosts";
 import { Poll } from "./Poll";
 import { Playlist } from "./Playlist";
+import { MyListItem } from "../modules/user/current-user/MyList";
 
 @ObjectType()
 @Entity()
@@ -66,6 +67,9 @@ export class User extends BaseEntity {
   @Column("simple-array", { nullable: true, default: 0 })
   following: number[];
 
+  @OneToMany(() => Comment, (comment) => comment.user)
+  comment: Comment[];
+
   // ---- TOP FIVE
 
   @Field(() => [TopFive])
@@ -79,9 +83,6 @@ export class User extends BaseEntity {
   @Field(() => [TopFive])
   @Column("jsonb", { nullable: true })
   topTracks: TopFive[];
-
-  @OneToMany(() => Comment, (comment) => comment.user)
-  comment: Comment[];
 
   // ---- POSTS BY THE USER
   @OneToMany(() => TrackPost, (trackPost) => trackPost.user)
@@ -98,4 +99,11 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Playlist, (playlist) => playlist.user)
   playlist: Playlist[];
+
+  // ---- POSTS THE USER HAS IN THEIR LIST
+  @Field(() => [MyListItem])
+  @Column("jsonb", {
+    default: [{ postId: 0, postType: "artist" }],
+  })
+  myList: MyListItem[];
 }
