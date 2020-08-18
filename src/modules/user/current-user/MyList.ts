@@ -58,6 +58,43 @@ const shallowEqual = (object1: any, object2: any) => {
 
 @Resolver()
 export class MyListResolver {
+  // GET POSTS IN MY LIST
+  @UseMiddleware(isAuth)
+  @Query(() => [GetPostsResultUnion])
+  async getMyList(@Ctx() ctx: MyContext) {
+    const currentUser = await User.findOne(ctx.payload?.userId)!;
+    if (!currentUser) {
+      throw new AuthenticationError("User not found");
+    }
+
+    // find the post
+    const myListPosts = currentUser.myList.map(async ({ postId, postType }) => {
+      let post;
+      const entity =
+        postType === "track"
+          ? TrackPost
+          : postType === "album"
+          ? AlbumPost
+          : postType === "artist"
+          ? ArtistPost
+          : postType === "playlist"
+          ? Playlist
+          : null;
+
+      if (!entity) {
+        return null;
+      }
+
+      post = await entity.findOne(postId);
+      if (!post) {
+        return;
+      }
+      return post;
+    });
+    return myListPosts;
+  }
+
+  // ADD POSTS
   @UseMiddleware(isAuth)
   @Mutation(() => User)
   async addToMyList(
@@ -106,42 +143,55 @@ export class MyListResolver {
     return await User.findOne(ctx.payload?.userId)!;
   }
 
+  // REMOVE POSTS
   @UseMiddleware(isAuth)
-  @Query(() => [GetPostsResultUnion]) //maybe for query...
-  async getMyList(@Ctx() ctx: MyContext) {
+  @Mutation(() => User)
+  async removeFromMyList(
+    @Arg("data") { postId, postType }: MyListInput,
+    @Ctx() ctx: MyContext
+  ) {
+    // get current user
     const currentUser = await User.findOne(ctx.payload?.userId)!;
     if (!currentUser) {
       throw new AuthenticationError("User not found");
     }
+    const listItem = { postId, postType };
 
-    // find the post
-    const myListPosts = currentUser.myList.map(async ({ postId, postType }) => {
-      let post;
-      const entity =
-        postType === "track"
-          ? TrackPost
-          : postType === "album"
-          ? AlbumPost
-          : postType === "artist"
-          ? ArtistPost
-          : postType === "playlist"
-          ? Playlist
-          : null;
+    // only remove if not already existing
+    const existingList = currentUser.myList;
 
-      if (!entity) {
-        return null;
-      }
+    const alreadyInList = existingList
+      .map((el) => {
+        if (shallowEqual(el, listItem)) {
+          return true;
+        }
 
-      post = await entity.findOne(postId);
-      if (!post) {
-        return;
-      }
-      return post;
-    });
+        return false;
+      })
+      .includes(true);
 
-    // console.log("\n", myListPosts);
+    // console.log(
+    //   "\n in my list",
+    //   alreadyInList,
+    //   "\n",
+    //   existingList,
+    //   "\n",
+    //   newListItem
+    // );
 
-    return myListPosts;
+    if (alreadyInList) {
+      const list = existingList.filter((el) => !shallowEqual(el, listItem));
+      console.log("\n list new", list);
+      console.log("\n list current", existingList);
+
+      const query = createQueryBuilder()
+        .update(User)
+        .where("id = :id", { id: currentUser.id });
+
+      await query.set({ myList: list }).execute();
+    }
+
+    return await User.findOne(ctx.payload?.userId)!;
   }
 
   //end of resolver
