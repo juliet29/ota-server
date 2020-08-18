@@ -39,6 +39,23 @@ export class MyListInput {
   postType: string;
 }
 
+const shallowEqual = (object1: any, object2: any) => {
+  const keys1 = Object.keys(object1);
+  const keys2 = Object.keys(object2);
+
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+
+  for (let key of keys1) {
+    if (object1[key] !== object2[key]) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
 @Resolver()
 export class MyListResolver {
   @UseMiddleware(isAuth)
@@ -52,18 +69,44 @@ export class MyListResolver {
     if (!currentUser) {
       throw new AuthenticationError("User not found");
     }
+    const newListItem = { postId, postType };
 
-    const list = [...currentUser.myList, { postId, postType }];
+    // only add if not already existing
+    const existingList = currentUser.myList;
 
-    const query = createQueryBuilder()
-      .update(User)
-      .where("id = :id", { id: currentUser.id });
+    const alreadyInList = existingList
+      .map((el) => {
+        if (shallowEqual(el, newListItem)) {
+          return true;
+        }
 
-    await query.set({ myList: list }).execute();
+        return false;
+      })
+      .includes(true);
+
+    // console.log(
+    //   "\n in my list",
+    //   alreadyInList,
+    //   "\n",
+    //   existingList,
+    //   "\n",
+    //   newListItem
+    // );
+
+    if (!alreadyInList) {
+      const list = [...existingList, newListItem];
+
+      const query = createQueryBuilder()
+        .update(User)
+        .where("id = :id", { id: currentUser.id });
+
+      await query.set({ myList: list }).execute();
+    }
 
     return await User.findOne(ctx.payload?.userId)!;
   }
 
+  @UseMiddleware(isAuth)
   @Query(() => [GetPostsResultUnion]) //maybe for query...
   async getMyList(@Ctx() ctx: MyContext) {
     const currentUser = await User.findOne(ctx.payload?.userId)!;
@@ -90,8 +133,13 @@ export class MyListResolver {
       }
 
       post = await entity.findOne(postId);
+      if (!post) {
+        return;
+      }
       return post;
     });
+
+    // console.log("\n", myListPosts);
 
     return myListPosts;
   }
