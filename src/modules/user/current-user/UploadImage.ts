@@ -1,8 +1,8 @@
 import { AuthenticationError } from "apollo-server-express";
 import { Ctx, Mutation, Resolver, UseMiddleware } from "type-graphql";
-import { User } from "../../entity/User";
-import { MyContext } from "../../types/MyContext";
-import { isAuth } from "../middleware/isAuth";
+import { User } from "../../../entity/User";
+import { MyContext } from "../../../types/MyContext";
+import { isAuth } from "../../middleware/isAuth";
 
 // scalar Upload
 

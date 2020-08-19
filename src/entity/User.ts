@@ -1,4 +1,4 @@
-import { TopFive } from "../modules/user/UserTopFive";
+import { TopFive } from "../modules/user/current-user/UserTopFive";
 import { Field, ID, ObjectType } from "type-graphql";
 import {
   BaseEntity,

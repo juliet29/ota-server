@@ -11,6 +11,10 @@ export class SpotifyDataSource extends RESTDataSource {
     this.baseURL = "https://api.spotify.com/v1/";
   }
 
+  async getReccomendations(genreList: string) {
+    return this.get(`recommendations?market=US&seed_genres=${genreList}`);
+  }
+
   async getGenreSeeds() {
     return this.get(
       `https://api.spotify.com/v1/recommendations/available-genre-seeds`

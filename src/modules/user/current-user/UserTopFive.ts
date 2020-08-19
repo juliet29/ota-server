@@ -1,5 +1,5 @@
 import { AuthenticationError } from "apollo-server-express";
-import { MyContext } from "../../types/MyContext";
+import { MyContext } from "../../../types/MyContext";
 import {
   Arg,
   Ctx,
@@ -10,8 +10,8 @@ import {
   UseMiddleware,
   ObjectType,
 } from "type-graphql";
-import { User } from "../../entity/User";
-import { isAuth } from "../middleware/isAuth";
+import { User } from "../../../entity/User";
+import { isAuth } from "../../middleware/isAuth";
 import { BaseEntity } from "typeorm";
 
 @ObjectType()

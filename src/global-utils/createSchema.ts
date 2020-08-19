@@ -19,13 +19,14 @@ import { EditCommentResolver } from "../modules/comment/EditComment";
 import { EditPostResolver } from "../modules/post/EditPost";
 import { SearchPostResolver } from "../modules/post/SearchPosts";
 import { OtherUserResolver } from "../modules/user/OtherUser";
-import { UseTopFiveResolver } from "../modules/user/UserTopFive";
-import { UploadImageResolver } from "../modules/user/UploadImage";
+import { UseTopFiveResolver } from "../modules/user/current-user/UserTopFive";
+import { UploadImageResolver } from "../modules/user/current-user/UploadImage";
 import { EditUserResolver } from "../modules/user/current-user/EditUser";
 import { GenresResolver } from "../modules/spotify/info/GetGenres";
 import { CreatePollResolver } from "../modules/post/CreatePoll";
 import { CreatePlaylistResolver } from "../modules/post/CreatePlaylist";
 import { MyListResolver } from "../modules/user/current-user/MyList";
+import { DiscoverResolver } from "../modules/discover/Discover";
 
 export const CreateSchema = () =>
   buildSchema({
@@ -57,6 +58,7 @@ export const CreateSchema = () =>
       CreatePollResolver,
       CreatePlaylistResolver,
       MyListResolver,
+      DiscoverResolver,
     ],
     nullableByDefault: true,
     //TODO remove this
