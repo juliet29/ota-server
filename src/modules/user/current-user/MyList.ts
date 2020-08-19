@@ -85,7 +85,7 @@ export class MyListResolver {
         return null;
       }
 
-      post = await entity.findOne(postId);
+      post = await entity.findOne(postId, { relations: ["user"] });
       if (!post) {
         return;
       }
@@ -170,16 +170,15 @@ export class MyListResolver {
       })
       .includes(true);
 
-    // console.log(
-    //   "\n in my list",
-    //   alreadyInList,
-    //   "\n",
-    //   existingList,
-    //   "\n",
-    //   newListItem
-    // );
-
     if (alreadyInList) {
+      // console.log(
+      //   "\n in my list, going to remove",
+      //   alreadyInList,
+      //   "\n",
+      //   existingList,
+      //   "\n",
+      //   listItem
+      // );
       const list = existingList.filter((el) => !shallowEqual(el, listItem));
       console.log("\n list new", list);
       console.log("\n list current", existingList);
@@ -189,7 +188,17 @@ export class MyListResolver {
         .where("id = :id", { id: currentUser.id });
 
       await query.set({ myList: list }).execute();
+      return await User.findOne(ctx.payload?.userId)!;
     }
+
+    // console.log(
+    //   "\n not in my list, not going to remove",
+    //   alreadyInList,
+    //   "\n",
+    //   existingList,
+    //   "\n",
+    //   listItem
+    // );
 
     return await User.findOne(ctx.payload?.userId)!;
   }
