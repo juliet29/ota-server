@@ -16,6 +16,10 @@ import { MyContext } from "../../types/MyContext";
 import { isAuth } from "../middleware/isAuth";
 import { Track } from "../spotify/search/SearchTypes";
 
+const getRandomInt = (max: number) => {
+  return Math.floor(Math.random() * Math.floor(max));
+};
+
 @ObjectType()
 export class Reccomendation {
   @Field(() => [Track])
@@ -118,10 +122,24 @@ export class DiscoverResolver {
       throw new AuthenticationError("User not found");
     }
 
-    // get genre list
-    const userGenres = user.genres.length > 1 ? user.genres : "pop";
+    // get firt genres on list
+    const userGenres = user.genres.length > 0 ? user.genres.slice(0, 2) : "pop";
     const genreList = encodeURIComponent(userGenres.toString());
 
-    return await ctx.dataSources?.SpotifyAPI.getReccomendations(genreList);
+    // get one random track
+    const userTrack = user.topTracks
+      ? user.topTracks.map((i) => i.id)[getRandomInt(user.topTracks.length)]
+      : null;
+
+    // get one random artist
+    const userArtist = user.topArtists
+      ? user.topArtists.map((i) => i.id)[getRandomInt(user.topArtists.length)]
+      : null;
+
+    return await ctx.dataSources?.SpotifyAPI.getReccomendations(
+      genreList,
+      userTrack,
+      userArtist
+    );
   }
 }

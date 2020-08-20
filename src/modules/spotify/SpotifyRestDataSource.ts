@@ -1,4 +1,4 @@
-import { RESTDataSource, RequestOptions } from "apollo-datasource-rest";
+import { RequestOptions, RESTDataSource } from "apollo-datasource-rest";
 // import { getSpotifyAccessToken } from "../../utils-global/spotifyToken";
 import { spotifyApi } from "../../index";
 
@@ -11,10 +11,15 @@ export class SpotifyDataSource extends RESTDataSource {
     this.baseURL = "https://api.spotify.com/v1/";
   }
 
-  async getReccomendations(genreList: string) {
-    return this.get(
-      `recommendations?market=US&seed_genres=${genreList}&limit=10`
-    );
+  async getReccomendations(genreList: string, track?: string, artist?: string) {
+    const base = `https://api.spotify.com/v1/recommendations?market=US&limit=10&seed_genres=${genreList}`;
+    let newBase = track ? base.concat(`&seed_tracks=${track}`) : base;
+
+    newBase = artist ? newBase.concat(`&seed_artists=${artist}`) : newBase;
+
+    console.log("new base \n ", newBase);
+
+    return this.get(newBase);
   }
 
   async getGenreSeeds() {
