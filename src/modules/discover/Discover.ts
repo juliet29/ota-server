@@ -1,20 +1,20 @@
+import { AuthenticationError } from "apollo-server-express";
 import {
-  Resolver,
-  Query,
+  createUnionType,
   Ctx,
-  UseMiddleware,
-  ObjectType,
   Field,
+  ObjectType,
+  Query,
+  Resolver,
+  UseMiddleware,
 } from "type-graphql";
-import { GetPostsResultUnion } from "../post/GetPosts";
 import { MoreThan, MoreThanOrEqual } from "typeorm";
-import { ArtistPost, AlbumPost, TrackPost } from "../../entity/ContentPosts";
+import { AlbumPost, ArtistPost, TrackPost } from "../../entity/ContentPosts";
 import { Playlist } from "../../entity/Playlist";
-import { Track } from "../spotify/search/SearchTypes";
+import { User } from "../../entity/User";
 import { MyContext } from "../../types/MyContext";
 import { isAuth } from "../middleware/isAuth";
-import { User } from "../../entity/User";
-import { AuthenticationError } from "apollo-server-express";
+import { Track } from "../spotify/search/SearchTypes";
 
 @ObjectType()
 export class Reccomendation {
@@ -22,9 +22,26 @@ export class Reccomendation {
   tracks: Track[];
 }
 
+export const GetContentPostsResultUnion = createUnionType({
+  name: "GetContentPostsResult",
+  types: () => [AlbumPost, ArtistPost, TrackPost] as const,
+  resolveType: (value: any) => {
+    if ("albumId" in value) {
+      return AlbumPost;
+    }
+    if ("trackId" in value) {
+      return TrackPost;
+    }
+    if ("artistId" in value) {
+      return ArtistPost;
+    }
+    return null;
+  },
+});
+
 @Resolver()
 export class DiscoverResolver {
-  @Query(() => [GetPostsResultUnion])
+  @Query(() => [GetContentPostsResultUnion])
   async getTopPosts() {
     const minLikes = MoreThan(1);
     // get all posts w more than 1 like
