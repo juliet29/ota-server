@@ -102,7 +102,8 @@ export class DiscoverResolver {
     }
 
     // get genre list
-    const genreList = encodeURIComponent(user.genres.toString());
+    const userGenres = user.genres.length > 1 ? user.genres : "pop";
+    const genreList = encodeURIComponent(userGenres.toString());
 
     return await ctx.dataSources?.SpotifyAPI.getReccomendations(genreList);
   }

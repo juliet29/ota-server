@@ -12,7 +12,9 @@ export class SpotifyDataSource extends RESTDataSource {
   }
 
   async getReccomendations(genreList: string) {
-    return this.get(`recommendations?market=US&seed_genres=${genreList}`);
+    return this.get(
+      `recommendations?market=US&seed_genres=${genreList}&limit=10`
+    );
   }
 
   async getGenreSeeds() {
