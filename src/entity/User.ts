@@ -12,6 +12,7 @@ import { AlbumPost, ArtistPost, TrackPost } from "./ContentPosts";
 import { Poll } from "./Poll";
 import { Playlist } from "./Playlist";
 import { MyListItem } from "../modules/user/current-user/MyList";
+import { DirectMessage } from "./DirectMessage";
 
 @ObjectType()
 @Entity()
@@ -106,4 +107,12 @@ export class User extends BaseEntity {
     default: [{ postId: 0, postType: "artist" }],
   })
   myList: MyListItem[];
+
+  // ---- DIRECT MESSAGES
+
+  @OneToMany(() => DirectMessage, (sentDM) => sentDM.sender)
+  sentDM: DirectMessage[];
+
+  @OneToMany(() => DirectMessage, (recievedDM) => recievedDM.sender)
+  recievedDM: DirectMessage[];
 }

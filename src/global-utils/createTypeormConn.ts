@@ -5,6 +5,7 @@ import { ArtistPost, AlbumPost, TrackPost } from "../entity/ContentPosts";
 import { Comment } from "../entity/Comment";
 import { Poll } from "../entity/Poll";
 import { Playlist } from "../entity/Playlist";
+import { DirectMessage } from "../entity/DirectMessage";
 
 export const createTypeormConnection = async () => {
   console.log(`typeorm knows our env is ${process.env.NODE_ENV}`);
@@ -22,6 +23,7 @@ export const createTypeormConnection = async () => {
         Comment,
         Poll,
         Playlist,
+        DirectMessage,
       ],
       name: "default",
     } as any;

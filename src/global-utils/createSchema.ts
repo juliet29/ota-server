@@ -27,6 +27,7 @@ import { CreatePollResolver } from "../modules/post/CreatePoll";
 import { CreatePlaylistResolver } from "../modules/post/CreatePlaylist";
 import { MyListResolver } from "../modules/user/current-user/MyList";
 import { DiscoverResolver } from "../modules/discover/Discover";
+import { HandleDirectMessageResolver } from "../modules/direct-messages/HandleDirectMessages";
 
 export const CreateSchema = () =>
   buildSchema({
@@ -59,6 +60,7 @@ export const CreateSchema = () =>
       CreatePlaylistResolver,
       MyListResolver,
       DiscoverResolver,
+      HandleDirectMessageResolver,
     ],
     nullableByDefault: true,
     //TODO remove this
