@@ -1,11 +1,11 @@
-import { ObjectType, Field, ID } from "type-graphql";
+import { Field, ID, ObjectType } from "type-graphql";
 import {
-  Entity,
-  Column,
-  ManyToOne,
   BaseEntity,
-  PrimaryGeneratedColumn,
+  Column,
   CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
 } from "typeorm";
 import { User } from "./User";
 
@@ -35,4 +35,8 @@ export class DirectMessage extends BaseEntity {
   @Field()
   @Column()
   conversationID: string;
+
+  // @Field(() => (AlbumPost | ArtistPost | TrackPost | Poll | Playlist))
+  // @Column("jsonb", { nullable: true })
+  // content: AlbumPost | ArtistPost | TrackPost | Poll | Playlist
 }

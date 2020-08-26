@@ -1,19 +1,19 @@
 import { AuthenticationError } from "apollo-server-express";
-import { DirectMessage } from "../../entity/DirectMessage";
+import { nanoid } from "nanoid";
 import {
   Arg,
   Ctx,
   Field,
   InputType,
   Mutation,
+  Query,
   Resolver,
   UseMiddleware,
-  Query,
 } from "type-graphql";
-import { isAuth } from "../middleware/isAuth";
-import { MyContext } from "../../types/MyContext";
+import { DirectMessage } from "../../entity/DirectMessage";
 import { User } from "../../entity/User";
-import { nanoid } from "nanoid";
+import { MyContext } from "../../types/MyContext";
+import { isAuth } from "../middleware/isAuth";
 
 @InputType()
 export class DirectMessageInput {
@@ -25,6 +25,9 @@ export class DirectMessageInput {
 
   @Field()
   partnerID?: number;
+
+  // @Field(() => GetPostsResultUnion)
+  // content?: typeof GetPostsResultUnion;
 }
 
 @Resolver()
