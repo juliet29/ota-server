@@ -13,6 +13,7 @@ import {
 import { isAuth } from "../middleware/isAuth";
 import { MyContext } from "../../types/MyContext";
 import { User } from "../../entity/User";
+import { nanoid } from "nanoid";
 
 @InputType()
 export class DirectMessageInput {
@@ -30,7 +31,7 @@ export class DirectMessageInput {
 export class HandleDirectMessageResolver {
   @UseMiddleware(isAuth)
   @Mutation(() => DirectMessage)
-  async handleDM(
+  async sendNewDM(
     @Arg("data")
     { text, recipientID }: DirectMessageInput,
     @Ctx() ctx: MyContext
@@ -43,6 +44,25 @@ export class HandleDirectMessageResolver {
 
     let recipient = await User.findOne(recipientID);
     let sender = user;
+    let conversationID: string;
+    // see if a chat history exists between two users
+
+    const recievedDM = await DirectMessage.findOne({
+      where: { recipient: user.id, sender: recipientID },
+    });
+
+    const sentDM = await DirectMessage.findOne({
+      where: { recipient: recipientID, sender: user.id },
+    });
+
+    console.log("\n rec dms", recievedDM, "\n send dms", sentDM);
+
+    conversationID = recievedDM
+      ? recievedDM.conversationID
+      : sentDM
+      ? sentDM.conversationID
+      : nanoid();
+
     let newDM: DirectMessage;
 
     try {
@@ -50,6 +70,7 @@ export class HandleDirectMessageResolver {
         text,
         recipient,
         sender,
+        conversationID,
       }).save();
     } catch (err) {
       throw new Error(err);
@@ -66,11 +87,23 @@ export class HandleDirectMessageResolver {
     if (!user) {
       throw new AuthenticationError("User not found");
     }
-    const DMSenders = await DirectMessage.find({
+    const myDMs = await DirectMessage.find({
       relations: ["sender", "recipient"],
-      where: { recipient: user.id },
+      where: [{ recipient: user.id }, { sender: user.id }],
     });
-    return DMSenders;
+
+    // only return unique convos
+
+    const flags = new Set();
+    const myUniqueDMs = myDMs.filter((entry) => {
+      if (flags.has(entry.conversationID)) {
+        return false;
+      }
+      flags.add(entry.conversationID);
+      return true;
+    });
+
+    return myUniqueDMs;
   }
 
   @UseMiddleware(isAuth)

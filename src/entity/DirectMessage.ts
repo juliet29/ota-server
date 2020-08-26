@@ -31,4 +31,8 @@ export class DirectMessage extends BaseEntity {
   @Field()
   @Column()
   text: string;
+
+  @Field()
+  @Column()
+  conversationID: string;
 }
