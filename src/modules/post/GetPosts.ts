@@ -1,20 +1,20 @@
+import { AuthenticationError } from "apollo-server-express";
+import { MyContext } from "src/types/MyContext";
 import {
   Arg,
   createUnionType,
+  Ctx,
   Query,
   Resolver,
   UseMiddleware,
-  Ctx,
 } from "type-graphql";
+import { createQueryBuilder, SelectQueryBuilder } from "typeorm";
 // import { isAuth } from "../middleware/isAuth";
 import { AlbumPost, ArtistPost, TrackPost } from "../../entity/ContentPosts";
-import { createQueryBuilder } from "typeorm";
-import { User } from "../../entity/User";
-import { Poll } from "../../entity/Poll";
 import { Playlist } from "../../entity/Playlist";
+import { Poll } from "../../entity/Poll";
+import { User } from "../../entity/User";
 import { isAuth } from "../middleware/isAuth";
-import { MyContext } from "src/types/MyContext";
-import { AuthenticationError } from "apollo-server-express";
 
 export const GetPostsResultUnion = createUnionType({
   name: "GetPostsResult",
@@ -82,8 +82,6 @@ export class GetPostsResolver {
       .of(id)
       .loadMany();
 
-    console.log("playlists", playlists);
-
     return [
       ...albumPosts,
       ...artistPosts,
@@ -102,28 +100,46 @@ export class GetPostsResolver {
       throw new AuthenticationError("User not found");
     }
 
-    const query = createQueryBuilder().relation(User, "albumPost");
-
-    // get posts based on id of people this user follows
-    const exQuery = async (k: number) => {
-      return await query.of(k).loadMany();
-    };
-
-    const ids = [17, 19];
-
-    const getData = async () => {
-      return Promise.all(ids.map(async (i) => exQuery(i)));
-    };
-    // let allPosts: any[] = [];
-    const posts = await getData().then((data) => {
-      // const newData = data.map((i) => Object.values(i));
-      const hello: any[] = [];
-      data.forEach((i) => i.forEach((k) => hello.push(k)));
-      console.log("\n ALL posts", hello, "\n");
-      return hello;
+    const types = ["AlbumPost", "ArtistPost", "TrackPost", "Poll", "Playlist"];
+    const ids = user.following;
+    const queries = types.map((type) => {
+      const typeUser = type.concat(".user");
+      return createQueryBuilder(type).leftJoinAndSelect(typeUser, "user");
     });
 
-    // console.log("\n ALL posts", posts, "\n");
+    // get all post types
+    const exQueryForUser = async (k: number) => {
+      const getAllPosts = async (
+        query: SelectQueryBuilder<any>,
+        id: number
+      ) => {
+        return await query.where("user.id = :id", { id }).getMany();
+      };
+
+      const resolvePosts = async () => {
+        return Promise.all(queries.map((i) => getAllPosts(i, k)));
+      };
+      const allPosts = resolvePosts().then((d) => {
+        const joinPostsArray: any[] = [];
+        d.forEach((i) => i.forEach((k) => joinPostsArray.push(k)));
+        return joinPostsArray;
+      });
+
+      return allPosts;
+    };
+
+    // get posts from everyone being followed
+    const getData = async () => {
+      return Promise.all(ids.map(async (id) => await exQueryForUser(id)));
+    };
+
+    const posts = await getData().then((data) => {
+      // console.log("\n data", data, "\n");
+      const joinPostsArray: any[] = [];
+      data.forEach((i) => i.forEach((k) => joinPostsArray.push(k)));
+
+      return joinPostsArray;
+    });
 
     return [...posts];
   }

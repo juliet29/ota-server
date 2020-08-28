@@ -87,11 +87,10 @@ export class EditUserResolver {
       await User.update(user.id, {
         firstLogin: false,
       });
+      return true;
     } catch (err) {
       throw new Error(`user not updated" ${err}`);
     }
-
-    return true;
   }
 
   // -------------
