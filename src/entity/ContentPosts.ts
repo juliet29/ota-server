@@ -1,8 +1,10 @@
 // all the posts with actual content, for now:
 // artists, albums, tracks
 import { Field, ObjectType } from "type-graphql";
-import { Column, Entity } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 import { BasePost } from "./BasePost";
+import { User } from "./User";
+import { Comment } from "./Comment";
 
 ///TODO: abstract artist names
 // @ObjectType()
@@ -22,6 +24,13 @@ export class ArtistPost extends BasePost {
   @Field()
   @Column()
   artistName: string;
+
+  @ManyToOne(() => User, (user) => user.artistPost)
+  @Field(() => User)
+  user: User;
+
+  @OneToMany(() => Comment, (comment) => comment.artistPost)
+  comment: Comment[];
 }
 
 @ObjectType()
@@ -42,6 +51,13 @@ export class AlbumPost extends BasePost {
   @Field()
   @Column()
   albumName: string;
+
+  @ManyToOne(() => User, (user) => user.albumPost)
+  @Field(() => User)
+  user: User;
+
+  @OneToMany(() => Comment, (comment) => comment.albumPost)
+  comment: Comment[];
 }
 
 @ObjectType()
@@ -62,4 +78,11 @@ export class TrackPost extends BasePost {
   @Field()
   @Column()
   trackName: string;
+
+  @ManyToOne(() => User, (user) => user.trackPost)
+  @Field(() => User)
+  user: User;
+
+  @OneToMany(() => Comment, (comment) => comment.trackPost)
+  comment: Comment[];
 }

@@ -13,7 +13,7 @@ import { MyContext } from "../../../types/MyContext";
 
 // TODO move responses/input types
 @ObjectType()
-class LoginResponse {
+export class LoginResponse {
   @Field()
   accessToken: string;
   @Field(() => User)
@@ -36,14 +36,17 @@ export class LoginResolver {
       throw new Error("could not find user");
     }
 
-    // // if we find the user, compare the passwords entered
-    const valid = await bcrypt.compare(password, user.password);
-    // console.log(password);
-    // const valid = true;
+    if (!user.facebookId) {
+      //
+      // // if we find the user, compare the passwords entered
+      const valid = await bcrypt.compare(password, user.password);
+      // console.log(password);
+      // const valid = true;
 
-    if (!valid) {
-      console.log("password not valid");
-      throw new Error("bad password");
+      if (!valid) {
+        console.log("password not valid");
+        throw new Error("bad password");
+      }
     }
 
     if (!user.confirmed) {

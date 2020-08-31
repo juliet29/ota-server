@@ -40,6 +40,7 @@ export class CreateArtistPostResolver {
     console.log(ctx);
 
     let newPost: ArtistPost;
+    const likes = 0;
     try {
       newPost = await ArtistPost.create({
         text,
@@ -48,6 +49,7 @@ export class CreateArtistPostResolver {
         artistName,
         externalUrl,
         user,
+        likes,
       }).save();
     } catch (err) {
       throw new Error(err);

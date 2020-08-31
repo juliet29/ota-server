@@ -57,6 +57,7 @@ export class CreateTrackPostResolver {
     }
 
     let newPost: TrackPost;
+    const likes = 0;
     try {
       newPost = await TrackPost.create({
         text,
@@ -67,6 +68,7 @@ export class CreateTrackPostResolver {
         externalUrl,
         trackName,
         user,
+        likes,
       }).save();
     } catch (err) {
       throw new Error(err);

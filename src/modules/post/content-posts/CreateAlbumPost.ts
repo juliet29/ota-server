@@ -54,6 +54,7 @@ export class CreateAlbumPostResolver {
     }
 
     let newPost: AlbumPost;
+    const likes = 0;
     try {
       newPost = await AlbumPost.create({
         text,
@@ -64,6 +65,7 @@ export class CreateAlbumPostResolver {
         artistNames,
         albumName,
         user,
+        likes,
       }).save();
     } catch (err) {
       throw new Error(err);

@@ -28,11 +28,14 @@ const SearchResultUnion = createUnionType({
 export class SearchResolver {
   // TODO
   @Query(() => SearchResultUnion, { nullable: true })
-  search(
+  async search(
     @Arg("query") query: string,
     @Arg("type") type: string,
     @Ctx() ctx: MyContext
   ) {
-    return ctx.dataSources?.SpotifyAPI.search(encodeURIComponent(query), type);
+    return await ctx.dataSources?.SpotifyAPI.search(
+      encodeURIComponent(query),
+      type
+    );
   }
 }

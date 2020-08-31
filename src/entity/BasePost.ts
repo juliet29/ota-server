@@ -1,13 +1,11 @@
+import { Field, ID, ObjectType } from "type-graphql";
 import {
-  Entity,
-  Column,
   BaseEntity,
-  PrimaryGeneratedColumn,
-  ManyToOne,
+  Column,
   CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
 } from "typeorm";
-import { User } from "./User";
-import { ObjectType, Field, ID } from "type-graphql";
 
 @ObjectType()
 @Entity()
@@ -28,14 +26,12 @@ export class BasePost extends BaseEntity {
   @Column({ nullable: true })
   externalUrl: string;
 
-  @ManyToOne(() => User, (user) => user.post)
-  @Field(() => User)
-  user: User;
-
   // link to song, artist, album are not mandatory, so field is nullable
   @Field({ nullable: true })
   @Column()
   imageUrl?: string;
 
-  // @CreateDateColumn is a special column that is automatically set to the entity's insertion date. You don't need to set this column - it will be automatically set.
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  likes?: number;
 }
