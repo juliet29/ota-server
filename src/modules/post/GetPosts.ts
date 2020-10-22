@@ -102,6 +102,8 @@ export class GetPostsResolver {
 
     const types = ["AlbumPost", "ArtistPost", "TrackPost", "Poll", "Playlist"];
     const ids = user.following;
+    // add user posts
+    ids.push(user.id);
     const queries = types.map((type) => {
       const typeUser = type.concat(".user");
       return createQueryBuilder(type).leftJoinAndSelect(typeUser, "user");

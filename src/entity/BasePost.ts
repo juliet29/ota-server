@@ -34,4 +34,8 @@ export class BasePost extends BaseEntity {
   @Field({ nullable: true })
   @Column({ nullable: true })
   likes?: number;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true, default: 0 })
+  numComments?: number;
 }

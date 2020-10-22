@@ -49,4 +49,8 @@ export class Comment extends BaseEntity {
   @ManyToOne(() => Poll, (poll) => poll.comment)
   @Field(() => AlbumPost)
   poll: AlbumPost;
+
+  // @ManyToOne(() => Playli, (poll) => poll.comment)
+  // @Field(() => AlbumPost)
+  // poll: AlbumPost;
 }

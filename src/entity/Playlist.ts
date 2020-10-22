@@ -62,4 +62,8 @@ export class Playlist extends BaseEntity {
   @ManyToOne(() => User, (user) => user.playlist)
   @Field(() => User)
   user: User;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true, default: 0 })
+  numComments?: number;
 }

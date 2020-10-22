@@ -45,10 +45,19 @@ export class CreateCommentResolver {
     }
 
     let trackPost, artistPost, albumPost, poll;
+    // let postComments;
 
     switch (postType) {
       case "track": {
         trackPost = await TrackPost.findOne(id);
+        // Comment.find({
+        //   where: [
+        //     { trackPostId: id },
+        //   ]})
+        //   postComments = Comment.findAndCount({
+        //     where: [
+        //       { trackPostId: id },
+        //     ]})
         break;
       }
       case "artist": {
@@ -73,6 +82,8 @@ export class CreateCommentResolver {
       }
     }
 
+    // console.log("postComms", postComments)
+
     let newComment: Comment;
     const likes = 0;
     try {
@@ -84,11 +95,18 @@ export class CreateCommentResolver {
         albumPost,
         artistPost,
         poll,
+        // playlist
       }).save();
     } catch (err) {
       throw new Error(err);
     }
     console.log("sender of a new comment", newComment.user.email);
+
+    // update number of comments on a post
+
+    // go through all comments, get number where post id = id, post type is right
+
+    // get the post, and set number to num comments
 
     return newComment;
   }

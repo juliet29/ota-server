@@ -123,7 +123,8 @@ export class DiscoverResolver {
     }
 
     // get firt genres on list
-    const userGenres = user.genres.length > 0 ? user.genres.slice(0, 2) : "pop";
+    const userGenres = user.genres.length > 0 ? user.genres.slice(0, 1) : "pop";
+    // userGenres.push("new-release");
     const genreList = encodeURIComponent(userGenres.toString());
 
     // get one random track

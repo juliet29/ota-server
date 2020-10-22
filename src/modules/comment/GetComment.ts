@@ -13,26 +13,6 @@ export class GetCommentsResolver {
     @Arg("data")
     { id, postType }: CommentInput
   ) {
-    // get all the comments associated with a single pos
-    //TODO: get users too https://typeorm.io/#/relational-query-builder
-    // const comments =
-    //   postType === "track"
-    //     ? await createQueryBuilder()
-    //         .relation(TrackPost, "comment")
-    //         .of(id)
-    //         .loadMany()
-    //     : postType === "artist"
-    //     ? await createQueryBuilder()
-    //         .relation(ArtistPost, "comment")
-    //         .of(id)
-    //         .loadMany()
-    //     : postType === "album"
-    //     ? await createQueryBuilder()
-    //         .relation(AlbumPost, "comment")
-    //         .of(id)
-    //         .loadMany()
-    //     : null;
-
     const entity =
       postType === "track"
         ? TrackPost
@@ -52,6 +32,10 @@ export class GetCommentsResolver {
         .relation(entity, "comment")
         .of(id)
         .loadMany();
+
+      // update the post comments number
+      entity.update(id, { numComments: comments.length });
+      console.log("updaying comments?", comments.length);
 
       // get person who made the comment
       let el;
